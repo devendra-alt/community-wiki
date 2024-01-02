@@ -1,0 +1,22 @@
+.landing-header {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+}
+
+.sign-in-btn {
+  background: rgb(255, 159, 81);
+  border: none;
+  border-radius: 1.2rem;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+}
+
+.sign-in-modal {
+  background-color: #fff;
+  z-index: 10;
+  width: 50%;
+  height: 50%;
+  margin: 5rem auto;
+}
