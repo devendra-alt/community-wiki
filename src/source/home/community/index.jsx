@@ -5,7 +5,9 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import AllMembersList from './allMembers';
-
+import AddMember from './actions/add';
+import { Button, Modal } from '@mui/material';
+import './style.css';
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -46,24 +48,38 @@ export default function Community() {
     setValue(newValue);
   };
 
+  const [addMember, setAddMember] = React.useState(false);
+
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label="All Memebers" {...a11yProps(0)} />
-          <Tab label="Commity Members" {...a11yProps(1)} />
-        </Tabs>
+    <section className="community-section">
+      <Button variant="contained" onClick={() => setAddMember(true)}>
+        Add Member
+      </Button>
+      <Modal
+        open={addMember}
+        onClose={() => setAddMember(false)}
+        style={{ overflow: 'scroll' }}
+      >
+        <AddMember />
+      </Modal>
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <Tab label="All Memebers" {...a11yProps(0)} />
+            <Tab label="Commity Members" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+        <CustomTabPanel value={value} index={0}>
+          <AllMembersList />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          <AllMembersList />
+        </CustomTabPanel>
       </Box>
-      <CustomTabPanel value={value} index={0}>
-        <AllMembersList />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <AllMembersList />
-      </CustomTabPanel>
-    </Box>
+    </section>
   );
 }
