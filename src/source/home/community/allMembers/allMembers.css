@@ -1,0 +1,19 @@
+.member-card {
+  padding: 1rem;
+  display: flex;
+  gap: 2rem;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.flex {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.member-age > span:first-child,
+.address > span:first-child,
+.occupation > span:first-child,
+.no-of-shops > span:first-child {
+  font-weight: 600;
+}

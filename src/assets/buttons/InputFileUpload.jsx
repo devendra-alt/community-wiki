@@ -27,8 +27,12 @@ export default function InputFileUpload({ onChange }) {
       startIcon={<CloudUploadIcon />}
       style={{ marginTop: '1rem' }}
     >
-      Upload file
-      <VisuallyHiddenInput type="file" onChange={handleFileChange} />
+      Upload Profile
+      <VisuallyHiddenInput
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+      />
     </Button>
   );
 }
