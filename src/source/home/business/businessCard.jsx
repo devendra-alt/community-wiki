@@ -31,7 +31,7 @@ export default function BusinessCard() {
   };
 
   return (
-    <Card sx={{ maxWidth: '90%', margin: '0 auto' }}>
+    <Card sx={{ maxWidth: '90%', margin: '0 auto' }} style={{marginTop:"2rem"}}>
       <CardHeader
         avatar={<></>}
         action={
