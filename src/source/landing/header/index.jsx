@@ -9,23 +9,51 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import './style.css';
-import { Modal } from '@mui/material';
+import { Alert, Modal } from '@mui/material';
+import { useMutation } from '@apollo/client';
+import LOGIN from '../../../graphql/user/mutation/signIn';
+import { setAuthState } from '../../../redux/feature/authSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function ResponsiveAppBar() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [error, setError] = React.useState(false);
+  const dispatch = useDispatch();
+
+  const [login] = useMutation(LOGIN);
+
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    login({
+      variables: {
+        email: data.get('email'),
+        password: data.get('password'),
+      },
+    })
+      .then((data) => {
+        console.log(data);
+        const {
+          data: {
+            login: { jwt, user },
+          },
+        } = data;
+        dispatch(setAuthState({ jwt, id: user.id }));
+      })
+      .then(() => {
+        navigate('/community');
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(true);
+      });
   };
 
   return (
@@ -59,9 +87,6 @@ function ResponsiveAppBar() {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
             <Box
               component="form"
               onSubmit={handleSubmit}
@@ -114,6 +139,7 @@ function ResponsiveAppBar() {
               </Grid>
             </Box>
           </Box>
+          {error && <Alert severity="error">error signing in!</Alert>}
         </Container>
       </Modal>
     </>

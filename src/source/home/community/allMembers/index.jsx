@@ -1,80 +1,57 @@
-import * as React from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
+import React from 'react';
+import './allMembers.css';
 
 export default function AllMembersList() {
   return (
-    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Brunch this weekend?"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: 'inline' }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                Ali Connors
-              </Typography>
-              {" — I'll be in your neighborhood doing errands this…"}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-      <Divider variant="inset" component="li" />
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Summer BBQ"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: 'inline' }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                to Scott, Alex, Jennifer
-              </Typography>
-              {" — Wish I could come, but I'm out of town this…"}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-      <Divider variant="inset" component="li" />
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Oui Oui"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: 'inline' }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                Sandra Adams
-              </Typography>
-              {' — Do you have Paris recommendations? Have you ever…'}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-    </List>
+    <section className="members-list">
+      <ul>
+        <li>
+          <div className="member-card">
+            <img
+              src="
+https://fastercapital.com/images/people/colored/harish_muleva.jpg?t=1
+"
+            />
+            <div className="memeber-info">
+              <h3 className="memeber-name">Harish Muleva</h3>
+              <p className="member-age flex">
+                <span>Age</span>
+                <span>51</span>
+              </p>
+              <p className="member-age flex">
+                <span>Title</span>
+                <span>Software Engineer,CEO</span>
+              </p>
+              <p className="address flex">
+                <span>Address</span>
+                <span>Chikkagubbi,Bengalore,562149</span>
+              </p>
+              <p className="occupation flex">
+                <span>occupation</span>
+                <span>Software Consultance and Services</span>
+              </p>
+              <p className="mobile flex">
+                <span>Mobile</span>
+                <span>9892819283</span>
+              </p>
+              //** details of occupation (render logo for related field's) */
+              {/* <p className="no-of-shops flex">
+                <span></span>
+                <span></span>
+              </p> */}
+              <p className="location flex">
+                <span>location</span>
+                <span>current</span>
+                //!** open pin highlight on map
+              </p>
+              <button>business</button>
+              <button>address</button>
+              <button>education</button>
+              <button>Family</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
   );
 }

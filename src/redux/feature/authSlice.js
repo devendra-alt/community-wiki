@@ -5,7 +5,6 @@ export const authSlice = createSlice({
   initialState: {
     userId: null,
     isLoggedIn: false,
-    userRoles: [],
     userRole: null,
   },
   reducers: {
@@ -17,6 +16,7 @@ export const authSlice = createSlice({
       }
     },
     setAuthState: (state, actions) => {
+      console.log(actions);
       localStorage.setItem('token', actions.payload.jwt);
       localStorage.setItem('id', actions.payload.id);
       state.userId = actions.payload.id;

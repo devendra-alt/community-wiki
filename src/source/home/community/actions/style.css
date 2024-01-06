@@ -1,0 +1,14 @@
+.add-container {
+  z-index: 1;
+  background: #fff;
+  margin: 5rem auto;
+  padding: 1rem;
+  width: 80%;
+}
+
+.form-controller-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}

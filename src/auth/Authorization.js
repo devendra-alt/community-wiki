@@ -9,7 +9,7 @@ export default function Authorization() {
   return (
     <BrowserRouter>
       <ApolloProvider client={client}>
-        {localStorage.getItem('token') ? <Landing /> : <App />}
+        {localStorage.getItem('token') ? <App /> : <Landing />}
       </ApolloProvider>
     </BrowserRouter>
   );

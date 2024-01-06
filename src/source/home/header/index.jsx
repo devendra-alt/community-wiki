@@ -11,9 +11,9 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import logo from '../../../assets/images/640px-Seervi_(Kshatariya)_Samaj.png';
 
-const pages = ['temple', 'community', 'shop', 'collection'];
+const pages = ['community', 'temple', 'shop', 'collection'];
 const settings = ['profile', 'logout'];
 
 function ResponsiveAppBar() {
@@ -31,7 +31,8 @@ function ResponsiveAppBar() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (setting) => (e) => {
+    console.log(e);
     setAnchorElUser(null);
   };
 
@@ -39,7 +40,6 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -55,7 +55,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            <img src={logo} width={'34px'} height={'34px'} alt="logo" />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -94,7 +94,6 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -111,7 +110,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            <img src={logo} width={'34px'} height={'34px'} alt="logo" />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -148,7 +147,10 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => handleCloseUserMenu(setting)}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
