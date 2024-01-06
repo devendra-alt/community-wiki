@@ -8,6 +8,8 @@ import AllMembersList from './allMembers';
 import AddMember from './actions/add';
 import { Button, Modal } from '@mui/material';
 import './style.css';
+import { useQuery } from '@apollo/client';
+import GET_USERS from './../../../graphql/user/query/getUsers';
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -47,6 +49,9 @@ export default function Community() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const { data, error } = useQuery(GET_USERS);
+  console.log(data);
 
   const [addMember, setAddMember] = React.useState(false);
 

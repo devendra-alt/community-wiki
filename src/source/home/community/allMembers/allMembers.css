@@ -17,3 +17,24 @@
 .no-of-shops > span:first-child {
   font-weight: 600;
 }
+
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.seeDetails-btn {
+  height: 2rem;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: rgb(255, 238, 217);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  text-transform: uppercase;
+  cursor: pointer;
+}

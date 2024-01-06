@@ -1,0 +1,19 @@
+.shop-card-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 2rem;
+}
+
+.field {
+  display: flex;
+  gap: 1rem;
+}
+
+.field > p:first-child {
+  font-weight: 600;
+}
+
+.business-details {
+  padding-bottom: 5rem;
+}
