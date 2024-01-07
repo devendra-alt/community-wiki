@@ -1,6 +1,7 @@
 .member-card {
   padding: 1rem;
   display: flex;
+  flex-direction: column;
   gap: 2rem;
   border-radius: 1rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -14,8 +15,14 @@
 .member-age > span:first-child,
 .address > span:first-child,
 .occupation > span:first-child,
-.no-of-shops > span:first-child {
+.no-of-shops > span:first-child,
+.mobile > span:first-child,
+.location > span:first-child {
   font-weight: 600;
+  color: #ffb03a;
+  text-transform: uppercase;
+  display: inline-block;
+  padding-right: 0.4rem;
 }
 
 .actions {
@@ -24,7 +31,12 @@
   align-items: center;
 }
 
-.seeDetails-btn {
+.user-card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.user-card- .seeDetails-btn {
   height: 2rem;
   padding: 0.5rem 1rem;
   display: flex;
@@ -37,4 +49,10 @@
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   text-transform: uppercase;
   cursor: pointer;
+}
+
+@media screen and (min-width: 764px) {
+  .member-card {
+    flex-direction: row;
+  }
 }

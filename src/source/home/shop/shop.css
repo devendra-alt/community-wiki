@@ -1,0 +1,21 @@
+.shop-interaction-btns {
+  display: flex;
+  gap: 1rem;
+}
+
+.shop-interaction-btns > button {
+  padding: 0.4rem 0.7rem;
+  background-color: #e6f3ff;
+  border-radius: 0.5rem;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.member-info {
+  display: flex;
+  gap: 0.2rem;
+  flex-direction: column;
+}
