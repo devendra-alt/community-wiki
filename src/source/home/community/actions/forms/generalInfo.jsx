@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   TextField,
   FormControl,
@@ -12,9 +12,11 @@ import {
   Radio,
   FormLabel,
   Avatar,
+  Button,
 } from '@mui/material';
 import InputFileUpload from '../../../../../assets/buttons/InputFileUpload';
 import postData from './postData';
+import fetchGeoData from '../getGeodetails';
 
 const educationOptions = [
   '10th pass',
@@ -25,13 +27,62 @@ const educationOptions = [
 ];
 
 export default function GeneralInfo({ formDataPersist, setFormDataPersist }) {
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
-    setFormDataPersist((prevState) => {
-      const newState = [...prevState];
-      newState[0] = { ...newState[0], [name]: value };
-      return newState;
-    });
+    if (name === 'pinCode' && value.toString().length === 6) {
+      try {
+        const response = await fetchGeoData(value.toString());
+        const data = response.data[0];
+        setFormDataPersist((prevState) => {
+          const updatedData = {
+            ...prevState[0],
+            [name]: value,
+            district: data?.districtname ?? '',
+            city: data?.city ?? '',
+            state: data?.statename ?? '',
+          };
+          return [updatedData, ...prevState.slice(1)];
+        });
+      } catch (error) {
+        console.error('Error fetching geo data:', error);
+      }
+    } else {
+      setFormDataPersist((prevState) => {
+        const updatedState = prevState.map((obj, index) => {
+          if (index === 0) {
+            return { ...obj, [name]: value };
+          }
+          return obj;
+        });
+        return updatedState;
+      });
+      console.log(formDataPersist);
+    }
+  };
+
+  const [error, setError] = useState(false);
+
+  const setCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setFormDataPersist((prevState) => {
+            const newState = [...prevState];
+            newState[0] = {
+              ...newState[0],
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            };
+            return newState;
+          });
+        },
+        (err) => {
+          setError(err.message);
+        }
+      );
+    } else if (!navigator.geolocation) {
+      setError('Geolocation is not supported by this browser.');
+    }
   };
 
   const handleSubmit = (e) => {
@@ -47,12 +98,14 @@ export default function GeneralInfo({ formDataPersist, setFormDataPersist }) {
       process.env.REACT_APP_UPLOAD_ENDPOINT,
       formData
     );
-    console.log(response);
     reader.onload = () => {
       if (reader.readyState === 2) {
         setFormDataPersist((prevState) => {
           const newState = [...prevState];
-          newState[0] = { ...newState[0], image: response[0] };
+          newState[0] = {
+            ...newState[0],
+            image: response[0],
+          };
           return newState;
         });
       }
@@ -68,7 +121,7 @@ export default function GeneralInfo({ formDataPersist, setFormDataPersist }) {
         <Grid>
           <Grid item xs={12} align="center" spacing={2}>
             <Avatar
-              src={formDataPersist[0].image}
+              src={formDataPersist[0].image?.url}
               sx={{ width: 100, height: 100 }}
             />
             <InputFileUpload onChange={handleImageUpload} />
@@ -237,6 +290,94 @@ export default function GeneralInfo({ formDataPersist, setFormDataPersist }) {
             />
           </Grid>
 
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="PIN CODE"
+              name="pinCode"
+              type="number"
+              value={formDataPersist[0].pinCode}
+              onChange={handleChange}
+              margin="normal"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="District"
+              name="district"
+              value={formDataPersist[0].district}
+              onChange={handleChange}
+              margin="normal"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="City"
+              name="city"
+              value={formDataPersist[0].city}
+              onChange={handleChange}
+              margin="normal"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="state"
+              name="state"
+              value={formDataPersist[0].state}
+              onChange={handleChange}
+              margin="normal"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="Complete Address"
+              name="completAddress"
+              value={formDataPersist[0].completAddress}
+              onChange={handleChange}
+              margin="normal"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Button
+              type="button"
+              variant="outlined"
+              onClick={() => setCurrentLocation()}
+            >
+              Set Current Location
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="Latitude"
+              name="latitude"
+              value={formDataPersist[0].latitude}
+              onChange={handleChange}
+              margin="normal"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="Longitude"
+              name="longitude"
+              value={formDataPersist[0].longitude}
+              onChange={handleChange}
+              margin="normal"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <InputLabel>Education</InputLabel>

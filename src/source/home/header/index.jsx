@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import logo from '../../../assets/images/640px-Seervi_(Kshatariya)_Samaj.png';
 import { useNavigate } from 'react-router-dom';
 
-const pages = ['community', 'temple', 'shop', 'collection'];
+const pages = ['temple', 'community', 'shop'];
 const settings = ['profile', 'logout'];
 
 function ResponsiveAppBar() {

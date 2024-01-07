@@ -51,7 +51,14 @@ export default function Community() {
   };
 
   const { data, error } = useQuery(GET_USERS);
-  console.log(data);
+
+  const dataSet = data?.usersPermissionsUsers?.data?.map((value) => {
+    console.log(value);
+    return {
+      id: value.id,
+      ...value.attributes,
+    };
+  });
 
   const [addMember, setAddMember] = React.useState(false);
 
@@ -79,7 +86,7 @@ export default function Community() {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          <AllMembersList />
+          <AllMembersList data={dataSet} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <AllMembersList />

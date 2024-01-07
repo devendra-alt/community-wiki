@@ -10,11 +10,7 @@ import BusinessCard from '../source/home/business/businessCard';
 export default function Content() {
   return (
     <Routes>
-      <Route
-        path="/"
-        exact={true}
-        element={<Navigate to="/community" />}
-      ></Route>
+      <Route path="/" exact={true} element={<Navigate to="/temple" />}></Route>
       <Route
         path="/community"
         key="/community"
@@ -24,7 +20,11 @@ export default function Content() {
       <Route path="/temple" exact={true} element={<Temple />} />
       <Route path="/user-details/:id" exact={true} element={<User />} />
       <Route path="/shops" exact={true} element={<Shops />} />
-      <Route path="/shops/show/:showId" exact={true} element={<BusinessCard></BusinessCard>}/>
+      <Route
+        path="/shops/show/:showId"
+        exact={true}
+        element={<BusinessCard></BusinessCard>}
+      />
       <Route path="/collection" exact={true} element={<Collection />} />
     </Routes>
   );
