@@ -3,7 +3,6 @@ import './allMembers.css';
 import MemberCard from '../../user/memberCard';
 
 export default function AllMembersList({ data }) {
-  console.log(data);
   return (
     <section className="members-list">
       <ul className="members-list-data">

@@ -7,7 +7,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import ShopCard from './shopCard';
-import MapWithMultiplePins from './plot';
+import MapWithMultiplePins from '../../address/render/plot';
 import GET_SHOP_PLOTS from '../../../graphql/shop/query/getShopPlots';
 import './shop.css';
 import { Button, Modal } from '@mui/material';

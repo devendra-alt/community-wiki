@@ -7,6 +7,8 @@ const CREATE_SHOP = gql`
     $name: String
     $startdate: Date
     $address: [ID]
+    $userId: ID
+    $templeId: ID
   ) {
     createBusinessProfile(
       data: {
@@ -15,6 +17,8 @@ const CREATE_SHOP = gql`
         name: $name
         startdate: $startdate
         addresses: $address
+        userid: $userId
+        temple: $templeId
       }
     ) {
       data {

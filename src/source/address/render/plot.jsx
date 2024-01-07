@@ -5,7 +5,7 @@ import L from 'leaflet';
 
 const MapWithMultiplePins = ({ locations }) => {
   if (!locations || locations.length === 0) {
-    return <div>Loading...</div>; // Or any loading indicator
+    return <div>Loading...</div>;
   }
 
   const bangaloreLocations = [
@@ -49,7 +49,6 @@ const MapWithMultiplePins = ({ locations }) => {
       longitude: 77.4116,
     },
     { id: 10, name: 'Nandi Hills', latitude: 13.3705, longitude: 77.6835 },
-    // Add more locations as needed
   ];
 
   const redIcon = new L.Icon({
@@ -64,8 +63,7 @@ const MapWithMultiplePins = ({ locations }) => {
   });
   return (
     <MapContainer
-      center={[12.9742, 77.5955
-      ]}
+      center={[12.9742, 77.5955]}
       zoom={10}
       style={{ height: '400px', width: '100%' }}
     >
@@ -88,7 +86,5 @@ const MapWithMultiplePins = ({ locations }) => {
     </MapContainer>
   );
 };
-
-// Example usage with latitude, longitude, and location name
 
 export default MapWithMultiplePins;

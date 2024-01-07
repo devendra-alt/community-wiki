@@ -13,7 +13,7 @@ import {
   FormLabel,
   Avatar,
 } from '@mui/material';
-import postData from '../../community/actions/forms/postData';
+import postData from '../../../network/post/postData';
 
 const educationOptions = [
   '10th pass',

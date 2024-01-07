@@ -11,7 +11,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import './businessCard.css';
 import { Link } from 'react-router-dom';
-import LocationComponent from '../community/actions/forms/location';
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -31,7 +30,10 @@ export default function BusinessCard() {
   };
 
   return (
-    <Card sx={{ maxWidth: '90%', margin: '0 auto' }} style={{marginTop:"2rem"}}>
+    <Card
+      sx={{ maxWidth: '90%', margin: '0 auto' }}
+      style={{ marginTop: '2rem' }}
+    >
       <CardHeader
         avatar={<></>}
         action={
@@ -108,7 +110,6 @@ export default function BusinessCard() {
           </div>
           <div className="location-details">
             <Typography paragraph>Businees Locations</Typography>
-            <LocationComponent />
           </div>
         </CardContent>
       </Collapse>

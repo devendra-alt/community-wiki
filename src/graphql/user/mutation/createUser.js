@@ -20,9 +20,11 @@ export const CREATE_USER = gql`
     $email: String
     $password: String
     $address_id: [ID]
+    $temple_id: ID
   ) {
     createUsersPermissionsUser(
       data: {
+        temple: $temple_id
         username: $username
         email: $email
         password: $password
