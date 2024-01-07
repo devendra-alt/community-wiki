@@ -6,6 +6,7 @@ export const authSlice = createSlice({
     userId: null,
     isLoggedIn: false,
     userRole: null,
+    userData: null,
   },
   reducers: {
     getAuthState: (state) => {
@@ -40,6 +41,9 @@ export const authSlice = createSlice({
     getUserRole: (state) => {
       state.userRole = localStorage.getItem('selectedRole');
     },
+    setUserData: (state, actions) => {
+      state.userData = actions.payload;
+    },
   },
 });
 
@@ -50,6 +54,7 @@ export const {
   setUserRole,
   getUserRole,
   setUserRoles,
+  setUserData,
   getUserRoles,
 } = authSlice.actions;
 export default authSlice.reducer;
