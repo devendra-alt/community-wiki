@@ -1,40 +1,37 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
-const GET_USER = gql`
-  query GET_USER($id: ID) {
-    usersPermissionsUser(id: $id) {
+const GET_USERS = gql`
+  query {
+    usersPermissionsUsers {
       data {
+        id
         attributes {
           username
           email
-          myrole
           photo {
             data {
               id
               attributes {
-                formats
-              }
-            }
-          }
-          temples {
-            data {
-              id
-              attributes {
                 name
+                formats
               }
             }
           }
           addresses {
             data {
+              id
               attributes {
-                addresstype
+                latitude
+                longitude
               }
             }
           }
+          dob
+          father
         }
       }
     }
   }
 `;
 
-export default GET_USER;
+export default GET_USERS;

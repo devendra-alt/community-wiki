@@ -12,8 +12,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import logo from '../../../assets/images/640px-Seervi_(Kshatariya)_Samaj.png';
+import { useNavigate } from 'react-router-dom';
 
-const pages = ['community', 'temple', 'shop', 'collection'];
+const pages = ['temple', 'community', 'shop'];
 const settings = ['profile', 'logout'];
 
 function ResponsiveAppBar() {
@@ -27,12 +28,17 @@ function ResponsiveAppBar() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const navigation = useNavigate();
+
+  const handleCloseNavMenu = (page) => {
     setAnchorElNav(null);
+    if (page === 'community') navigation('/community');
+    else if (page === 'temple') navigation('/temple');
+    else if (page === 'shop') navigation('/shops');
+    else if (page === 'collection') navigation('/collection');
   };
 
   const handleCloseUserMenu = (setting) => (e) => {
-    console.log(e);
     setAnchorElUser(null);
   };
 
@@ -88,8 +94,10 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
+                  <Typography textAlign="center">
+                    {page.toString().toUpperCase()}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -116,7 +124,7 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handleCloseNavMenu(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}

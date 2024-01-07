@@ -8,6 +8,8 @@ import AllMembersList from './allMembers';
 import AddMember from './actions/add';
 import { Button, Modal } from '@mui/material';
 import './style.css';
+import { useQuery } from '@apollo/client';
+import GET_USERS from './../../../graphql/user/query/getUsers';
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -48,6 +50,16 @@ export default function Community() {
     setValue(newValue);
   };
 
+  const { data, error } = useQuery(GET_USERS);
+
+  const dataSet = data?.usersPermissionsUsers?.data?.map((value) => {
+    console.log(value);
+    return {
+      id: value.id,
+      ...value.attributes,
+    };
+  });
+
   const [addMember, setAddMember] = React.useState(false);
 
   return (
@@ -74,7 +86,7 @@ export default function Community() {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          <AllMembersList />
+          <AllMembersList data={dataSet} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <AllMembersList />

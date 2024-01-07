@@ -1,0 +1,11 @@
+.header {
+  display: flex;
+  background-color: #cccccc;
+  margin: 1rem;
+  border-radius: 1.3rem;
+  position: relative;
+}
+
+.user-profile-image {
+  border-radius: 0.5rem;
+}
