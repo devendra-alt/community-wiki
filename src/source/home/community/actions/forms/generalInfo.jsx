@@ -15,8 +15,8 @@ import {
   Button,
 } from '@mui/material';
 import InputFileUpload from '../../../../../assets/buttons/InputFileUpload';
-import postData from './postData';
-import fetchGeoData from '../getGeodetails';
+import postData from '../../../../network/post/postData';
+import fetchGeoData from '../../../../address/webapi/getGeodetails';
 
 const educationOptions = [
   '10th pass',

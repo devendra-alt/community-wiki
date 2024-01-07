@@ -4,20 +4,15 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function MemberCard({ memberDetails }) {
-  console.log(memberDetails?.addresses?.data[0]?.attributes);
   const navigator = useNavigate();
-
   function calculateAge(birthDate) {
     const today = new Date();
     const dob = new Date(birthDate);
-
     let age = today.getFullYear() - dob.getFullYear();
     const monthDiff = today.getMonth() - dob.getMonth();
-
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
       age--;
     }
-
     return age;
   }
   return (

@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import AllMembersList from './allMembers';
 import AddMember from './actions/add';
 import { Button, Modal } from '@mui/material';
-import './style.css';
+import './community.css';
 import { useQuery } from '@apollo/client';
 import GET_USERS from './../../../graphql/user/query/getUsers';
 function CustomTabPanel(props) {
@@ -53,7 +53,6 @@ export default function Community() {
   const { data, error } = useQuery(GET_USERS);
 
   const dataSet = data?.usersPermissionsUsers?.data?.map((value) => {
-    console.log(value);
     return {
       id: value.id,
       ...value.attributes,

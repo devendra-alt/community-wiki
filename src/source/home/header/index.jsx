@@ -38,7 +38,7 @@ function ResponsiveAppBar() {
     else if (page === 'collection') navigation('/collection');
   };
 
-  const handleCloseUserMenu = (setting) => (e) => {
+  const handleCloseUserMenu = (e) => {
     setAnchorElUser(null);
   };
 

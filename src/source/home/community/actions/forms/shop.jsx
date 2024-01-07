@@ -9,7 +9,7 @@ import {
   MenuItem,
   Grid,
 } from '@mui/material';
-import fetchGeoData from '../getGeodetails';
+import fetchGeoData from '../../../../address/webapi/getGeodetails';
 
 const WorkDetailsForm = ({ formDataPersist, setFormDataPersist }) => {
   const [occupation, setOccupation] = useState('');
