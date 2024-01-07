@@ -28,26 +28,6 @@ const GET_USERS = gql`
           }
           dob
           father
-          businesses {
-            data {
-              id
-              attributes {
-                category
-                addresses {
-                  data {
-                    id
-                    attributes {
-                      latitude
-                      longitude
-                      district
-                      state
-                      pincode
-                    }
-                  }
-                }
-              }
-            }
-          }
         }
       }
     }

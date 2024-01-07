@@ -7,7 +7,7 @@ export const CREATE_USER = gql`
     $sex: String
     $photo: ID
     $dob: Date
-    $mobile: Int
+    $mobile: Long
     $temples: [ID]
     $education_level: String
     $marital_status: String
@@ -19,6 +19,7 @@ export const CREATE_USER = gql`
     $username: String
     $email: String
     $password: String
+    $address_id: [ID]
   ) {
     createUsersPermissionsUser(
       data: {
@@ -39,6 +40,7 @@ export const CREATE_USER = gql`
         gotra: $gotra
         father_gotra: $father_gotra
         role: $role_Id
+        addresses: $address_id
       }
     ) {
       data {
