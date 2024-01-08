@@ -4,11 +4,11 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import PersonalInfo from './actions';
-import BusinessCard from '../business/businessCard';
+import Business from '../business/index';
 import './user.css';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import EditUser from './actions/editUser';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -46,8 +46,12 @@ function a11yProps(index) {
 export default function User() {
   const { state } = useLocation();
 
-  const { userData } = useSelector((state) => state.auth);
-  console.log(userData);
+  const { data } = useSelector((state) => state.user);
+
+  const businessInfoData =
+    data?.usersPermissionsUser?.data?.attributes?.business_profiles?.data ?? [];
+
+  console.log(data?.usersPermissionsUser?.attributes?.business_profiles);
 
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -80,12 +84,12 @@ export default function User() {
             </Tabs>
           </Box>
           <CustomTabPanel value={value} index={0}>
-            <PersonalInfo />
+            <EditUser data={data} />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
-            <BusinessCard />
+            <Business data={businessInfoData} />
           </CustomTabPanel>
-          <CustomTabPanel va lue={value} index={2}></CustomTabPanel>
+          <CustomTabPanel value={value} index={2}></CustomTabPanel>
         </Box>
       </div>
     </div>
