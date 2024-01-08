@@ -17,6 +17,7 @@ import {
 import InputFileUpload from '../../../../../assets/buttons/InputFileUpload';
 import postData from '../../../../network/post/postData';
 import fetchGeoData from '../../../../address/webapi/getGeodetails';
+import CreateAddress from '../../../../address/actions/create';
 
 const educationOptions = [
   '10th pass',
@@ -61,6 +62,7 @@ export default function GeneralInfo({ formDataPersist, setFormDataPersist }) {
   };
 
   const [error, setError] = useState(false);
+  const [addAddress, setAddAddress] = useState(false);
 
   const setCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -289,95 +291,13 @@ export default function GeneralInfo({ formDataPersist, setFormDataPersist }) {
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-
           <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="PIN CODE"
-              name="pinCode"
-              type="number"
-              value={formDataPersist[0].pinCode}
-              onChange={handleChange}
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="District"
-              name="district"
-              value={formDataPersist[0].district}
-              onChange={handleChange}
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="City"
-              name="city"
-              value={formDataPersist[0].city}
-              onChange={handleChange}
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="state"
-              name="state"
-              value={formDataPersist[0].state}
-              onChange={handleChange}
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Complete Address"
-              name="completAddress"
-              value={formDataPersist[0].completAddress}
-              onChange={handleChange}
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Button
-              type="button"
-              variant="outlined"
-              onClick={() => setCurrentLocation()}
-            >
-              Set Current Location
+            <Button variant="outlined" onClick={() => setAddAddress(true)}>
+              Add Address
             </Button>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Latitude"
-              name="latitude"
-              value={formDataPersist[0].latitude}
-              onChange={handleChange}
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
 
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Longitude"
-              name="longitude"
-              value={formDataPersist[0].longitude}
-              onChange={handleChange}
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
+          {addAddress && <CreateAddress />}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <InputLabel>Education</InputLabel>

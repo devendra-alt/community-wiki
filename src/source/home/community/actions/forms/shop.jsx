@@ -7,9 +7,9 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Grid,
 } from '@mui/material';
 import fetchGeoData from '../../../../address/webapi/getGeodetails';
+import CreateAddress from '../../../../address/actions/create';
 
 const WorkDetailsForm = ({ formDataPersist, setFormDataPersist }) => {
   const [occupation, setOccupation] = useState('');
@@ -56,35 +56,12 @@ const WorkDetailsForm = ({ formDataPersist, setFormDataPersist }) => {
     }
   };
 
-  const [error, setError] = useState(false);
-
-  const setCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setFormDataPersist((prevState) => {
-            const newState = [...prevState];
-            newState[1] = {
-              ...newState[1],
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            };
-            return newState;
-          });
-        },
-        (err) => {
-          setError(err.message);
-        }
-      );
-    } else if (!navigator.geolocation) {
-      setError('Geolocation is not supported by this browser.');
-    }
-  };
-
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     setFormDataPersist({ ...formDataPersist, multipleImages: files });
   };
+
+  const [addAddress, setAddAddress] = useState(false);
 
   return (
     <Container maxWidth="sm">
@@ -114,94 +91,6 @@ const WorkDetailsForm = ({ formDataPersist, setFormDataPersist }) => {
             onChange={handleInputChange}
             margin="normal"
           />
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="PIN CODE"
-              name="pinCode"
-              type="number"
-              value={formDataPersist[1].pinCode}
-              onChange={handleInputChange}
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="District"
-              name="district"
-              value={formDataPersist[1].district}
-              onChange={handleInputChange}
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="City"
-              name="city"
-              value={formDataPersist[1].city}
-              onChange={handleInputChange}
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="state"
-              name="state"
-              value={formDataPersist[1].state}
-              onChange={handleInputChange}
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Complete Address"
-              name="completAddress"
-              value={formDataPersist[1].completAddress}
-              onChange={handleInputChange}
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Button
-              type="button"
-              variant="outlined"
-              onClick={() => setCurrentLocation()}
-            >
-              Set Current Location
-            </Button>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Latitude"
-              name="latitude"
-              value={formDataPersist[1].latitude}
-              onChange={handleInputChange}
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Longitude"
-              name="longitude"
-              value={formDataPersist[1].longitude}
-              onChange={handleInputChange}
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
           <FormControl fullWidth margin="normal">
             <InputLabel>Type</InputLabel>
             <Select
@@ -229,11 +118,14 @@ const WorkDetailsForm = ({ formDataPersist, setFormDataPersist }) => {
               <MenuItem value="LARGE">LARGE</MenuItem>
             </Select>
           </FormControl>
+          <Button variant="outlined" onClick={() => setAddAddress(true)}>
+            Add Address
+          </Button>
+          {addAddress && <CreateAddress />}
         </form>
       )}
       {occupation === 'business' && (
         <form>
-          {/* Business-related fields */}
           <TextField
             fullWidth
             label="Business Type"
