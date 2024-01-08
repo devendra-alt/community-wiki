@@ -3,10 +3,10 @@ import { createSlice } from '@reduxjs/toolkit';
 export const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    userId: null,
     isLoggedIn: false,
     userRole: null,
     userData: null,
+    templeId: null,
   },
   reducers: {
     getAuthState: (state) => {
@@ -17,7 +17,6 @@ export const authSlice = createSlice({
       }
     },
     setAuthState: (state, actions) => {
-      console.log(actions);
       localStorage.setItem('token', actions.payload.jwt);
       localStorage.setItem('id', actions.payload.id);
       state.userId = actions.payload.id;
@@ -43,6 +42,13 @@ export const authSlice = createSlice({
     },
     setUserData: (state, actions) => {
       state.userData = actions.payload;
+      state.templeId =
+        actions?.payload?.usersPermissionsUser?.data?.attributes.temples.data[0].id;
+      localStorage.setItem(
+        'templeId',
+        actions?.payload?.usersPermissionsUser?.data?.attributes.temples.data[0]
+          .id
+      );
     },
   },
 });
