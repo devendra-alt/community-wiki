@@ -1,23 +1,6 @@
 import React, { useState } from 'react';
-import {
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Grid,
-  Container,
-  FormControlLabel,
-  RadioGroup,
-  Radio,
-  FormLabel,
-  Avatar,
-  Button,
-} from '@mui/material';
-import fetchGeoData from '../../home/community/actions/getGeodetails';
-// import postData from './postData';
-// import fetchGeoData from '../getGeodetails';
-// import InputFileUpload from '../../../assets/buttons/InputFileUpload';
+import { TextField, Grid, Button } from '@mui/material';
+import fetchGeoData from '../webapi/getGeodetails';
 
 export default function CreateAddress() {
   const [addressFormData, setAdddressFormData] = useState({
@@ -166,6 +149,9 @@ export default function CreateAddress() {
           margin="normal"
           InputLabelProps={{ shrink: true }}
         />
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <Button variant="outlined">Save Address</Button>
       </Grid>
     </>
   );
