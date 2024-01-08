@@ -38,8 +38,13 @@ function ResponsiveAppBar() {
     else if (page === 'collection') navigation('/collection');
   };
 
-  const handleCloseUserMenu = (e) => {
+  const handleCloseUserMenu = (setting) => {
     setAnchorElUser(null);
+    const userId = localStorage.getItem('id');
+    if (setting === 'profile')
+      navigation(`/user-details/${userId}`, {
+        state: { currentUserProfile: true },
+      });
   };
 
   return (
