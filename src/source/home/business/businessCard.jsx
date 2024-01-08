@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useState } from 'react';
 import './businessCard.css';
 import { Link } from 'react-router-dom';
 const ExpandMore = styled((props) => {
@@ -22,12 +23,21 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function BusinessCard() {
+export default function BusinessCard({ business }) {
   const [expanded, setExpanded] = React.useState(false);
+
+  console.log(business);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const [businessData, setBusinessData] = useState({
+    name: '',
+    type: '',
+    subtype: '',
+    logoUrl: '',
+  });
 
   return (
     <Card
@@ -55,12 +65,12 @@ export default function BusinessCard() {
           <div className="business-information">
             <div className="field">
               <p className="details-title">Business Name</p>
-              <p>Jay Ambika Jewellers</p>
+              <p>{businessData.name}</p>
             </div>
             <div className="field">
               <p className="details-title">Owner Name</p>
               <p>
-                <Link to="/user-details/:12">Raj Govind Ji</Link>
+                <Link to="/user-details/:12">{}</Link>
               </p>
             </div>
             <div className="field">
