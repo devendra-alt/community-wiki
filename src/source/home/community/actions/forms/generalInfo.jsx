@@ -27,7 +27,11 @@ const educationOptions = [
   'Doctorate',
 ];
 
-export default function GeneralInfo({ formDataPersist, setFormDataPersist }) {
+export default function GeneralInfo({
+  formDataPersist,
+  setFormDataPersist,
+  setAddressId,
+}) {
   const handleChange = async (e) => {
     const { name, value } = e.target;
     if (name === 'pinCode' && value.toString().length === 6) {
@@ -57,7 +61,6 @@ export default function GeneralInfo({ formDataPersist, setFormDataPersist }) {
         });
         return updatedState;
       });
-      console.log(formDataPersist);
     }
   };
 
@@ -121,7 +124,7 @@ export default function GeneralInfo({ formDataPersist, setFormDataPersist }) {
     <Container maxWidth="sm">
       <form onSubmit={handleSubmit} id="user-personal-info">
         <Grid>
-          <Grid item xs={12} align="center" spacing={2}>
+          <Grid item xs={12} align="center" spacing={2} lg={6}>
             <Avatar
               src={formDataPersist[0].image?.url}
               sx={{ width: 100, height: 100 }}
@@ -297,7 +300,12 @@ export default function GeneralInfo({ formDataPersist, setFormDataPersist }) {
             </Button>
           </Grid>
 
-          {addAddress && <CreateAddress />}
+          {addAddress && (
+            <CreateAddress
+              setAddressId={setAddressId}
+              addressType={'PERSONAL'}
+            />
+          )}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <InputLabel>Education</InputLabel>
