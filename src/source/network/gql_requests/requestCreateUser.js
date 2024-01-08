@@ -1,9 +1,9 @@
 import { client } from '../../../auth/client';
 import { CREATE_USER } from '../../../graphql/user/mutation/createUser';
 
-const requestCreateUser = ({ userData }) => {
+const requestCreateUser = async (userData) => {
   try {
-    const { data } = client.mutate({
+    const { data } = await client.mutate({
       mutation: CREATE_USER,
       variables: userData,
     });
