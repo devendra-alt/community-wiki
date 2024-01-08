@@ -1,7 +1,7 @@
 import { client } from '../../../auth/client';
 import CREATE_ADDRESS from '../../../graphql/address/mutation/createAddress';
 
-const requestCreateAddress = async ({ addressData }) => {
+const requestCreateAddress = async (addressData) => {
   try {
     const { data } = await client.mutate({
       mutation: CREATE_ADDRESS,
