@@ -7,6 +7,8 @@ import Box from '@mui/material/Box';
 import PersonalInfo from './actions';
 import BusinessCard from '../business/businessCard';
 import './user.css';
+import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,8 +44,12 @@ function a11yProps(index) {
 }
 
 export default function User() {
-  const [value, setValue] = React.useState(0);
+  const { state } = useLocation();
 
+  const { userData } = useSelector((state) => state.auth);
+  console.log(userData);
+
+  const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
