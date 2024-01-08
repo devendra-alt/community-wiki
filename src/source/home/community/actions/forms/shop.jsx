@@ -11,7 +11,11 @@ import {
 import fetchGeoData from '../../../../address/webapi/getGeodetails';
 import CreateAddress from '../../../../address/actions/create';
 
-const WorkDetailsForm = ({ formDataPersist, setFormDataPersist }) => {
+const WorkDetailsForm = ({
+  formDataPersist,
+  setFormDataPersist,
+  setAddressId,
+}) => {
   const [occupation, setOccupation] = useState('');
 
   const handleOccupationChange = (e) => {
@@ -63,6 +67,18 @@ const WorkDetailsForm = ({ formDataPersist, setFormDataPersist }) => {
 
   const [addAddress, setAddAddress] = useState(false);
 
+  const consumerMarkets = [
+    '',
+    'Electronics Market',
+    'Fashion and Apparel Market',
+    'Home Appliances Market',
+    'Beauty and Personal Care Market',
+    'Grocery Market',
+    'Furniture Market',
+    'Sporting Goods Market',
+    'Automobile Market',
+  ];
+
   return (
     <Container maxWidth="sm">
       <FormControl fullWidth margin="normal">
@@ -91,6 +107,15 @@ const WorkDetailsForm = ({ formDataPersist, setFormDataPersist }) => {
             onChange={handleInputChange}
             margin="normal"
           />
+          <TextField
+            fullWidth
+            label="Start Date"
+            name="startdate"
+            type="date"
+            value={formDataPersist[1]?.startdate}
+            onChange={handleInputChange}
+            margin="normal"
+          />
           <FormControl fullWidth margin="normal">
             <InputLabel>Type</InputLabel>
             <Select
@@ -98,30 +123,50 @@ const WorkDetailsForm = ({ formDataPersist, setFormDataPersist }) => {
               onChange={handleInputChange}
               name="businessType"
             >
-              <MenuItem value="">None</MenuItem>
-              <MenuItem value="RETAL">RETAL</MenuItem>
-              <MenuItem value="WHOLSALE">WHOLESALE</MenuItem>
-              <MenuItem value="SERVICE">SERVICE</MenuItem>
+              <MenuItem value="" key={0}>
+                None
+              </MenuItem>
+              <MenuItem value="RETAL" key={1}>
+                RETAL
+              </MenuItem>
+              <MenuItem value="WHOLSALE" key={2}>
+                WHOLESALE
+              </MenuItem>
+              <MenuItem value="SERVICE" key={3}>
+                SERVICE
+              </MenuItem>
             </Select>
           </FormControl>
 
           <FormControl fullWidth margin="normal">
-            <InputLabel>Size</InputLabel>
+            <InputLabel>SubType</InputLabel>
             <Select
-              value={formDataPersist[1]?.size}
+              value={formDataPersist[1]?.businessSubType}
               onChange={handleInputChange}
-              name="size"
+              name="businessSubType"
             >
-              <MenuItem value="">None</MenuItem>
-              <MenuItem value="SMALL">SMALL</MenuItem>
-              <MenuItem value="MEDIUM">MEDIUM</MenuItem>
-              <MenuItem value="LARGE">LARGE</MenuItem>
+              {consumerMarkets.map((market, index) => (
+                <MenuItem key={index} value={market}>
+                  {market}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
+          <TextField
+            fullWidth
+            label="Turnover"
+            name="turnover"
+            type="number"
+            value={formDataPersist[1]?.turnover}
+            onChange={handleInputChange}
+            margin="normal"
+          />
           <Button variant="outlined" onClick={() => setAddAddress(true)}>
             Add Address
           </Button>
-          {addAddress && <CreateAddress />}
+          {addAddress && (
+            <CreateAddress setAddressId={setAddAddress} addressType={'SHOP'} />
+          )}
         </form>
       )}
       {occupation === 'business' && (
@@ -134,12 +179,10 @@ const WorkDetailsForm = ({ formDataPersist, setFormDataPersist }) => {
             onChange={handleInputChange}
             margin="normal"
           />
-          {/* Add more fields for business */}
         </form>
       )}
       {occupation === 'job' && (
         <form>
-          {/* Job-related fields */}
           <TextField
             fullWidth
             label="Job Type"
@@ -148,7 +191,6 @@ const WorkDetailsForm = ({ formDataPersist, setFormDataPersist }) => {
             onChange={handleInputChange}
             margin="normal"
           />
-          {/* Add more fields for job */}
         </form>
       )}
     </Container>
