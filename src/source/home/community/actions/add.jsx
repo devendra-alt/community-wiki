@@ -4,8 +4,8 @@ import './style.css';
 import { Button } from '@mui/material';
 import GeneralInfo from './forms/generalInfo';
 import WorkDetailsForm from './forms/shop';
-import requestCreateAddress from './../../../network/gql_requests/requestCreateAddress';
 import requestCreateUser from './../../../network/gql_requests/requestCreateUser';
+import requestCreateShop from './../../../network/gql_requests/requestCreateShop';
 
 const generalInfoinitialValues = {
   image: null,
@@ -21,13 +21,6 @@ const generalInfoinitialValues = {
   father_name: '',
   gotra: '',
   father_gotra: '',
-  pinCode: Number('000000'),
-  district: '',
-  city: '',
-  state: '',
-  latitude: '',
-  longitude: '',
-  completAddress: '',
 };
 
 const workInfoinitialValues = {
@@ -36,15 +29,10 @@ const workInfoinitialValues = {
   multipleImages: [],
   defaultImage: '',
   businessType: '',
+  businessSubType: '',
   jobType: '',
-  pinCode: Number('000000'),
-  completAddress: '',
-  district: '',
-  city: '',
-  size: '',
-  state: '',
-  latitude: '',
-  longitude: '',
+  startdate: '',
+  turnover: 0,
 };
 
 export default function AddMember() {
@@ -63,59 +51,62 @@ export default function AddMember() {
     setActiveIndex((prev) => (prev === 0 ? prev : prev - 1));
   };
 
-  const handleCreateMemeber = async () => {
-    const addressData = await requestCreateAddress({
-      name: 'PERSONAL_ADDRESS',
-      district: formDataPersist[0].district,
-      address_raw: formDataPersist[0].completAddress,
-      latitude: parseFloat(formDataPersist[0].latitude),
-      longitude: parseFloat(formDataPersist[0].longitude),
-      pincode: parseInt(formDataPersist[0].pinCode),
-      state: formDataPersist[0].state,
-    });
+  const [addressId, setPersonalAddressId] = useState(0);
+  const [shopAddressId, setShopAddressId] = useState(0);
 
-    const userData = await requestCreateUser({
-      firstname: formDataPersist[0].firstName,
-      lastname: formDataPersist[0].lastName,
-      sex: formDataPersist[0].gender,
-      photo: formDataPersist[0].image.id,
-      dob: new Date(formDataPersist[0].dob).toISOString().split('T')[0],
-      username: formDataPersist[0].email.split('@')[0],
-      email: formDataPersist[0].email,
+  const handleCreateMemeber = async () => {
+    const userFormData = {
+      firstname: formDataPersist[0]?.firstName,
+      lastname: formDataPersist[0]?.lastName,
+      sex: formDataPersist[0]?.gender,
+      dob: new Date(formDataPersist[0]?.dob).toISOString().split('T')[0],
+      username: formDataPersist[0]?.email.split('@')[0],
+      email: formDataPersist[0]?.email,
       password: 'Welcome@123',
-      mobile: Number(formDataPersist[0].mobile),
-      temples: [1],
-      education_level: formDataPersist[0].education,
-      marital_status: formDataPersist[0].marital_status,
-      father_name: formDataPersist[0].father_name,
-      husband_name: formDataPersist[0].husband_name,
-      gotra: formDataPersist[0].gotra,
-      father_gotra: formDataPersist[0].father_gotra,
+      mobile: Number(formDataPersist[0]?.mobile),
+      temples: localStorage.getItem('templeId'),
+      education_level: formDataPersist[0]?.education,
+      marital_status: formDataPersist[0]?.marital_status,
+      father_name: formDataPersist[0]?.father_name,
+      husband_name: formDataPersist[0]?.husband_name,
+      gotra: formDataPersist[0]?.gotra,
+      father_gotra: formDataPersist[0]?.father_gotra,
       role_Id: 1,
-      address_id: addressData.data?.createAddress?.data?.id,
-    });
+    };
+
+    if (addressId) {
+      userFormData.address_id = addressId;
+      console.log('hello');
+    }
+
+    if (formDataPersist[0]?.image) {
+      userFormData.photo = formDataPersist[0]?.image;
+    }
+
+    const userData = await requestCreateUser(userFormData);
+
+    console.log();
 
     if (formDataPersist[1].shopName === '') {
       return;
     }
 
-    // const shopAddressData = await requestCreateAddress({
-    //   name: 'SHOP_ADDRESS',
-    //   district: formDataPersist[1].district,
-    //   address_raw: formDataPersist[1].completAddress,
-    //   latitude: parseFloat(formDataPersist[1].latitude),
-    //   longitude: parseFloat(formDataPersist[1].longitude),
-    //   pincode: parseInt(formDataPersist[1].pinCode),
-    //   state: formDataPersist[1].state,
-    // });
+    const userShopData = {
+      type: formDataPersist[1].businessType,
+      subtype: formDataPersist[1].businessSubType,
+      name: formDataPersist[1].shopName,
+      startdate: formDataPersist[1].startdate,
+      templeId: localStorage.getItem('templeId'),
+    };
 
-    // const shopData = await requestCreateShop({
-    //   type: formDataPersist[1].businessType,
-    //   subtype: formDataPersist[1].size,
-    //   name: formDataPersist[1].shopName,
-    //   startdate: formDataPersist[1].state,
-    //   addresses: shopAddressData.data?.createAddress?.data?.id,
-    // });
+    if (shopAddressId) {
+      userShopData.addresses = shopAddressId;
+    }
+
+    if (userData?.createUsersPermissionsUser?.data?.id) {
+      userShopData.userId = userData?.createUsersPermissionsUser?.data?.id;
+    }
+    const shopData = await requestCreateShop(userShopData);
   };
 
   return (
@@ -125,11 +116,13 @@ export default function AddMember() {
         <GeneralInfo
           formDataPersist={formDataPersist}
           setFormDataPersist={setFormDataPersist}
+          setAddressId={setPersonalAddressId}
         />
       ) : activeIndex === 1 ? (
         <WorkDetailsForm
           formDataPersist={formDataPersist}
           setFormDataPersist={setFormDataPersist}
+          setAddressId={setShopAddressId}
         />
       ) : null}
       <div className="form-controller-btns">

@@ -11,62 +11,14 @@ import {
   RadioGroup,
   Radio,
   FormLabel,
-  Avatar,
 } from '@mui/material';
-import postData from '../../../network/post/postData';
 
-const educationOptions = [
-  '10th pass',
-  '12th pass',
-  'Graduate',
-  'Post-graduate',
-  'Doctorate',
-];
-
-export default function PersonalInfo() {
-  const generalInfoinitialValues = {
-    image: null,
-    firstName: '',
-    lastName: '',
-    email: '',
-    mobile: null,
-    dob: '',
-    gender: '',
-    education: '',
-    marital_status: '',
-    husband_name: '',
-    father_name: '',
-    gotra: '',
-    father_gotra: '',
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(generalInfoinitialValues);
-  };
-
-  const handleImageUpload = async (file) => {
-    const reader = new FileReader();
-    const formData = new FormData();
-    formData.append('files', file);
-    const response = await postData(
-      process.env.REACT_APP_UPLOAD_ENDPOINT,
-      formData
-    );
-    console.log(response);
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-      }
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
-
+export default function FormUI({
+  handleChange,
+  userFormData,
+  handleSubmit,
+  educationOptions,
+}) {
   return (
     <Container maxWidth="sm">
       <form onSubmit={handleSubmit} id="user-personal-info">
@@ -76,10 +28,9 @@ export default function PersonalInfo() {
               fullWidth
               label="First Name"
               name="firstName"
-              value={generalInfoinitialValues.firstName}
+              value={userFormData.firstName}
               onChange={handleChange}
               margin="normal"
-              disabled={true}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -87,10 +38,9 @@ export default function PersonalInfo() {
               fullWidth
               label="Last Name"
               name="lastName"
-              value={generalInfoinitialValues.lastName}
+              value={userFormData.lastName}
               onChange={handleChange}
               margin="normal"
-              disabled={true}
             />
           </Grid>
 
@@ -99,10 +49,9 @@ export default function PersonalInfo() {
               fullWidth
               label="Father name"
               name="father_name"
-              value={generalInfoinitialValues.father_name}
+              value={userFormData.father_name}
               onChange={handleChange}
               margin="normal"
-              disabled={true}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -112,9 +61,8 @@ export default function PersonalInfo() {
                 row
                 aria-label="maritial"
                 name="marital_status"
-                value={generalInfoinitialValues.marital_status}
+                value={userFormData.marital_status}
                 onChange={handleChange}
-                disabled={true}
               >
                 <FormControlLabel
                   value="MARRIED"
@@ -146,9 +94,8 @@ export default function PersonalInfo() {
                 row
                 aria-label="gender"
                 name="gender"
-                value={generalInfoinitialValues.gender}
+                value={userFormData.gender}
                 onChange={handleChange}
-                disabled={true}
               >
                 <FormControlLabel
                   value="MALE"
@@ -168,18 +115,17 @@ export default function PersonalInfo() {
               </RadioGroup>
             </FormControl>
           </Grid>
-          {generalInfoinitialValues.gender === 'FEMALE' &&
-            generalInfoinitialValues.marital_status === 'MARRIED' && (
+          {userFormData.gender === 'FEMALE' &&
+            userFormData.marital_status === 'MARRIED' && (
               <>
                 <Grid item xs={12} md={6}>
                   <TextField
                     fullWidth
                     label="Husband name"
-                    name="husband name"
-                    value={generalInfoinitialValues.husband}
+                    name="husband_name"
+                    value={userFormData.husband}
                     onChange={handleChange}
                     margin="normal"
-                    disabled={true}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -187,10 +133,9 @@ export default function PersonalInfo() {
                     fullWidth
                     label="Father gotra"
                     name="father_gotra"
-                    value={generalInfoinitialValues.father_gotra}
+                    value={userFormData.father_gotra}
                     onChange={handleChange}
                     margin="normal"
-                    disabled={true}
                   />
                 </Grid>
               </>
@@ -201,10 +146,9 @@ export default function PersonalInfo() {
               label="Gotra"
               name="gotra"
               type="text"
-              value={generalInfoinitialValues.gotra}
+              value={userFormData.gotra}
               onChange={handleChange}
               margin="normal"
-              disabled={true}
             />
           </Grid>
 
@@ -214,10 +158,9 @@ export default function PersonalInfo() {
               label="Email"
               name="email"
               type="email"
-              value={generalInfoinitialValues.email}
+              value={userFormData.email}
               onChange={handleChange}
               margin="normal"
-              disabled={true}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -226,10 +169,9 @@ export default function PersonalInfo() {
               label="Contact Number"
               name="mobile"
               type="number"
-              value={generalInfoinitialValues.mobile}
+              value={userFormData.mobile}
               onChange={handleChange}
               margin="normal"
-              disabled={true}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -238,23 +180,20 @@ export default function PersonalInfo() {
               label="Date of Birth"
               name="dob"
               type="date"
-              value={generalInfoinitialValues.dob}
+              value={userFormData.dob}
               onChange={handleChange}
               margin="normal"
               InputLabelProps={{ shrink: true }}
-              disabled={true}
             />
           </Grid>
-
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <InputLabel>Education</InputLabel>
               <Select
                 label="Education"
                 name="education"
-                value={generalInfoinitialValues.education}
+                value={userFormData.education} // Changed from "userFormData.educationOptions"
                 onChange={handleChange}
-                disabled={true}
               >
                 {educationOptions.map((option) => (
                   <MenuItem key={option} value={option}>
