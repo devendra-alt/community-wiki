@@ -13,6 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import logo from '../../../assets/images/640px-Seervi_(Kshatariya)_Samaj.png';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setRenderUserData } from '../../../redux/feature/userSlice';
 
 const pages = ['temple', 'community', 'shop'];
 const settings = ['profile', 'logout'];
@@ -38,13 +40,16 @@ function ResponsiveAppBar() {
     else if (page === 'collection') navigation('/collection');
   };
 
+  const { userData } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
   const handleCloseUserMenu = (setting) => {
     setAnchorElUser(null);
     const userId = localStorage.getItem('id');
-    if (setting === 'profile')
-      navigation(`/user-details/${userId}`, {
-        state: { currentUserProfile: true },
-      });
+    if (setting === 'profile') {
+      dispatch(setRenderUserData(userData));
+      navigation(`/user-details/:${userId}`);
+    }
   };
 
   return (
