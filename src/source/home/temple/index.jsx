@@ -9,6 +9,7 @@ import './temple.css';
 import { Button } from '@mui/material';
 import Committiee from './committee';
 import { useNavigate, useNavigation } from 'react-router-dom';
+import Collection from '../collection';
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -173,7 +174,9 @@ data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoHCBUVFBcVFRUXGBcaGx4aG
           <CustomTabPanel value={value} index={1}>
             <Committiee />
           </CustomTabPanel>
-          <CustomTabPanel va lue={value} index={2}></CustomTabPanel>
+          <CustomTabPanel value={value} index={2}>
+            <Collection></Collection>
+          </CustomTabPanel>
         </Box>
       </div>
     </div>
