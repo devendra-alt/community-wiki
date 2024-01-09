@@ -12,6 +12,7 @@ const GET_USER = gql`
           marital
           sex
           gotra
+          myrole
           email
           username
           mobile
