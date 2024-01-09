@@ -5,7 +5,7 @@ import Temple from '../source/home/temple';
 import User from '../source/home/user';
 import Shops from '../source/home/shop';
 import Collection from '../source/home/collection';
-import BusinessCard from '../source/home/business/businessCard';
+import PublicBusinessCard from '../source/home/business/public/publicBusinessCard';
 
 export default function Content() {
   return (
@@ -21,9 +21,9 @@ export default function Content() {
       <Route path="/user-details/:id" exact={true} element={<User />} />
       <Route path="/shops" exact={true} element={<Shops />} />
       <Route
-        path="/shops/show/:showId"
+        path="/shops/shop/:shopId"
         exact={true}
-        element={<BusinessCard></BusinessCard>}
+        element={<PublicBusinessCard></PublicBusinessCard>}
       />
       <Route path="/collection" exact={true} element={<Collection />} />
     </Routes>
