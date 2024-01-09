@@ -52,7 +52,7 @@ const ShopCard = ({ business }) => {
       <div className="actions">
         <button
           className="seeDetails-btn"
-          onClick={() => navigator('/shops/show/1')}
+          onClick={() => navigator(`/shops/shop/${business.id}`)}
         >
           See Details
         </button>
