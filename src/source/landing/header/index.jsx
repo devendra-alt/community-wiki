@@ -19,7 +19,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 function ResponsiveAppBar() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [error, setError] = React.useState(false);
@@ -49,7 +49,9 @@ function ResponsiveAppBar() {
       })
       .then(() => {
         navigate('/community');
+        window.location.reload();
       })
+
       .catch((error) => {
         console.log(error);
         setError(true);

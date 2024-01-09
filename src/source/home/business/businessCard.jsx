@@ -9,9 +9,9 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { useState } from 'react';
 import './businessCard.css';
 import { Link } from 'react-router-dom';
+import MapWithMultiplePins from './../../address/render/plot';
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -23,21 +23,23 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function BusinessCard({ business }) {
+export default function BusinessCard({ business, user }) {
   const [expanded, setExpanded] = React.useState(false);
-
-  console.log(business);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const [businessData, setBusinessData] = useState({
-    name: '',
-    type: '',
-    subtype: '',
-    logoUrl: '',
-  });
+  const {
+    addresses,
+    establised_date,
+    logo,
+    name,
+    size,
+    startdate,
+    subtype,
+    type,
+  } = business.attributes;
 
   return (
     <Card
@@ -51,13 +53,13 @@ export default function BusinessCard({ business }) {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Jay Ambika Jewellers"
-        subheader="Jewellers"
+        title={name}
+        subheader={subtype}
       />
       <CardContent>
         <div className="shop-card-details">
           <img
-            src="https://content3.jdmagicbox.com/comp/delhi/w9/011pxx11.xx11.130912134029.r2w9/catalogue/golden-jeweller-vishnu-garden-gurgaon-delhi-jewellery-showrooms-7eszp7apbv.jpg"
+            src={logo.data[0].attributes.formats.thumbnail.url}
             alt=""
             width={'170px'}
             height={'170px'}
@@ -65,17 +67,23 @@ export default function BusinessCard({ business }) {
           <div className="business-information">
             <div className="field">
               <p className="details-title">Business Name</p>
-              <p>{businessData.name}</p>
+              <p>{name}</p>
             </div>
             <div className="field">
               <p className="details-title">Owner Name</p>
               <p>
-                <Link to="/user-details/:12">{}</Link>
+                <Link to="/user-details/:12">
+                  {user.firstname + ` ` + user.lastname}
+                </Link>
               </p>
             </div>
             <div className="field">
-              <p className="details-title">Mobile Number</p>
-              <p>+9181923-349923</p>
+              <p className="details-title">Mobile</p>
+              <p>{user.mobile ?? '917898852538'}</p>
+            </div>
+            <div className="field">
+              <p className="details-title">Email</p>
+              <p>{user.email ?? '917898852538'}</p>
             </div>
           </div>
           <div>
@@ -102,24 +110,25 @@ export default function BusinessCard({ business }) {
             <div className="business-information">
               <div className="field">
                 <p className="details-title">Shop Type</p>
-                <p>Retails</p>
+                <p>Retail{type}</p>
               </div>
               <div className="field">
                 <p className="details-title">Sub Category</p>
-                <p>Small</p>
+                <p>{subtype}</p>
               </div>
               <div className="field">
                 <p className="details-title">Business Sector</p>
-                <p>Commodity</p>
+                <p>{subtype}</p>
               </div>
               <div className="field">
                 <p className="details-title">Start Date</p>
-                <p>01-01-2001</p>
+                <p>{startdate}</p>
               </div>
             </div>
           </div>
           <div className="location-details">
             <Typography paragraph>Businees Locations</Typography>
+            {/* <MapWithMultiplePins locations={[]} /> */}
           </div>
         </CardContent>
       </Collapse>
