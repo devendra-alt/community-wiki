@@ -98,8 +98,6 @@ export default function Shops() {
 
   const [form, setForm] = useState(formData);
 
-  console.log(form);
-
   return (
     <Box sx={{ width: '100%' }}>
       {userData?.usersPermissionsUser?.data?.attributes?.myrole === 'ADMIN' ? (
@@ -107,7 +105,9 @@ export default function Shops() {
           <Button
             variant="outlined"
             style={{ margin: '1rem' }}
-            onClick={() => setAddMemberShop(true)}
+            onClick={() => {
+              setAddMemberShop(true);
+            }}
           >
             Add Member Shop
           </Button>

@@ -6,9 +6,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Business from '../business/index';
 import './user.css';
-import { useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import EditUser from './actions/editUser';
+import requestGetUserByID from './../../network/gql_requests/requestGetUserByID';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,14 +44,41 @@ function a11yProps(index) {
 }
 
 export default function User() {
-  const { state } = useLocation();
+  const { id } = useParams();
+  const [data, setUserData] = React.useState(null);
+  const [businessInfoData, setBusinessInfoData] = React.useState(null);
+  const [userProfile, setUserProfile] = React.useState({
+    id: id,
+    firstname: '',
+    lastname: '',
+    mobile: '',
+    email: '',
+  });
 
-  const { data } = useSelector((state) => state.user);
-
-  const businessInfoData =
-    data?.usersPermissionsUser?.data?.attributes?.business_profiles?.data ?? [];
-
-  console.log(data?.usersPermissionsUser?.attributes?.business_profiles);
+  React.useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const fetchedData = await requestGetUserByID(id);
+        setUserData(fetchedData);
+        setBusinessInfoData(
+          fetchedData?.usersPermissionsUser?.data?.attributes?.business_profiles
+            ?.data ?? []
+        );
+        const { firstname, lastname, mobile, email } =
+          data?.usersPermissionsUser?.data?.attributes;
+        setUserProfile({
+          id: data?.usersPermissionsUser?.data.id,
+          firstname,
+          lastname,
+          mobile,
+          email,
+        });
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+    fetchUserData();
+  }, [id]);
 
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -84,10 +111,10 @@ export default function User() {
             </Tabs>
           </Box>
           <CustomTabPanel value={value} index={0}>
-            <EditUser data={data} />
+            {data && <EditUser data={data} />}
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
-            <Business data={businessInfoData} />
+            <Business data={businessInfoData} user={userProfile} />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={2}></CustomTabPanel>
         </Box>

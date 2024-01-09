@@ -17,6 +17,7 @@ export default function EditUser({ data }) {
     gotra: '',
     father_gotra: '',
   };
+
   const {
     email,
     firstname,
@@ -28,7 +29,7 @@ export default function EditUser({ data }) {
     father,
     marital,
     gotra,
-  } = data.usersPermissionsUser.data.attributes;
+  } = data?.usersPermissionsUser?.data?.attributes;
 
   const updatedData = {
     ...initData,
