@@ -50,8 +50,6 @@ export default function Shops() {
   const { data } = useQuery(GET_SHOPS);
   const getPlots = useQuery(GET_SHOP_PLOTS);
 
-  console.log(getPlots?.data?.addresses?.data);
-
   const data_ = getPlots?.data?.addresses?.data?.map((data, index) => {
     return {
       latitude: data?.attributes?.latitude,
@@ -61,8 +59,6 @@ export default function Shops() {
     };
   });
 
-  console.log(data_);
-
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -70,7 +66,6 @@ export default function Shops() {
   };
 
   const { userData } = useSelector((state) => state.auth);
-  console.log(userData);
 
   const [addShop, setAddShop] = useState(false);
   const [addMemberShop, setAddMemberShop] = useState(false);
@@ -106,6 +101,7 @@ export default function Shops() {
             variant="outlined"
             style={{ margin: '1rem' }}
             onClick={() => {
+              console.log('hello');
               setAddMemberShop(true);
             }}
           >

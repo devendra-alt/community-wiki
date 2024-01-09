@@ -41,8 +41,6 @@ export default function BusinessCard({ business, user }) {
     type,
   } = business.attributes;
 
-  console.log(addresses.data[0].attributes);
-
   return (
     <Card
       sx={{ maxWidth: '90%', margin: '0 auto' }}
@@ -75,7 +73,6 @@ export default function BusinessCard({ business, user }) {
               <p className="details-title">Owner Name</p>
               <p>
                 <Link to="/user-details/:12">
-                  {' '}
                   {user.firstname + ` ` + user.lastname}
                 </Link>
               </p>
