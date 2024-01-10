@@ -203,20 +203,6 @@ const AllMembersTable = () => {
       ),
     },
     {
-      field: 'showDetails',
-      headerName: 'Show Details',
-      width: 150,
-      renderCell: (params) => (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => handleShowDetails(params.row.id)}
-        >
-          Add Amount
-        </Button>
-      ),
-    },
-    {
       field: 'hcmshowDetails',
       headerName: 'Show Details',
       width: 150,
