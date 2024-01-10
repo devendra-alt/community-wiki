@@ -9,6 +9,8 @@ import './user.css';
 import { useParams } from 'react-router-dom';
 import EditUser from './actions/editUser';
 import requestGetUserByID from './../../network/gql_requests/requestGetUserByID';
+import LocationCard from '../../address/render/locationCard';
+import EditEducation from '../education/actions/edit';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -116,7 +118,12 @@ export default function User() {
           <CustomTabPanel value={value} index={1}>
             <Business data={businessInfoData} user={userProfile} />
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={2}></CustomTabPanel>
+          <CustomTabPanel value={value} index={2}>
+            <EditEducation />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={3}>
+            <LocationCard />
+          </CustomTabPanel>
         </Box>
       </div>
     </div>

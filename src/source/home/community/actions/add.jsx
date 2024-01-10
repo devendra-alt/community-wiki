@@ -76,16 +76,13 @@ export default function AddMember() {
 
     if (addressId) {
       userFormData.address_id = addressId;
-      console.log('hello');
     }
 
     if (formDataPersist[0]?.image) {
-      userFormData.photo = formDataPersist[0]?.image;
+      userFormData.photo = formDataPersist[0].image.id;
     }
 
     const userData = await requestCreateUser(userFormData);
-
-    console.log();
 
     if (formDataPersist[1].shopName === '') {
       return;
