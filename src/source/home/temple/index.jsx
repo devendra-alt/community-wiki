@@ -4,12 +4,12 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import BusinessCard from '../business/businessCard';
 import './temple.css';
 import { Button } from '@mui/material';
 import Committiee from './committee';
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Collection from '../collection';
+import logo from '../../../assets/default_image.jpeg';
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -117,8 +117,7 @@ data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoHCBUVFBcVFRUXGBcaGx4aG
                 <img
                   src={
                     memberDetails?.photo?.data?.attributes?.formats?.thumbnail
-                      ?.url ??
-                    ' https://fastercapital.com/images/people/colored/harish_muleva.jpg?t=1'
+                      ?.url ?? { logo }
                   }
                   width={'244px'}
                 />
@@ -130,14 +129,15 @@ data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoHCBUVFBcVFRUXGBcaGx4aG
                     <span>Age</span>
                     <span>{calculateAge(memberDetails?.dob)}</span>
                   </p>
-                  <p className="member-age flex">
+                  <p className="member-title flex">
                     <span>Title</span>
                     <span>Software Engineer,CEO</span>
                   </p>
                   <p className="address flex">
                     <span>Address</span>
                     <span>
-                      {memberDetails?.address ?? 'Chikkagubbi,Bengalore,562149'}
+                      {memberDetails?.address ??
+                        'Chikkagubbi <br> Bengalore,562149'}
                     </span>
                   </p>
                   <p className="occupation flex">

@@ -8,7 +8,6 @@ export default function Business({ data, user }) {
       {data?.map((business) => (
         <BusinessCard business={business} user={user} />
       ))}
-      )
     </>
   );
 }

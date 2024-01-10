@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   FormControl,
@@ -17,6 +17,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_PLAN } from '../../../graphql/plan/mutation/createPlan';
 import { DataGrid } from '@mui/x-data-grid';
 import GET_PLANS from '../../../graphql/payment/query/getPlans';
+import { GET_PAYMENTS } from '../../../graphql/payment/query/getPayments';
 
 const styles = {
   modal: {
@@ -117,21 +118,41 @@ const AllMembersTable = () => {
     },
   });
 
-  const [selectedPlan, setSelectedPlan] = useState(
-    planDetails.plans.data[0].id
-  );
-  const [currentPlanData, setCurrentPlanData] = useState(
-    planDetails.plans.data[0]
-  );
+  const [selectedPlan, setSelectedPlan] = useState('');
+  const [currentPlanData, setCurrentPlanData] = useState(null);
+  const [currentPaymentsData, setCurrentPaymentsData] = useState(null);
 
-  //   const planDetails_ = planDetils?.plans?.data?.map((plan) => {
-  //     return {
-  //       plan_name: plan.attributes.plan_name,
-  //     };
-  //   });
+  useEffect(() => {
+    setSelectedPlan(planDetails?.plans?.data[0]?.id);
+    setCurrentPlanData(planDetails?.plans?.data[0]);
+  }, [planDetails]);
 
-  const getRecivedAmount = () => {};
-  getRecivedAmount();
+  const { data: memberPayments } = useQuery(GET_PAYMENTS, {
+    variables: {
+      templeID: localStorage.getItem('templeId'),
+    },
+  });
+
+  const filterPayments = (data) => {
+    return data?.payments?.data?.filter(
+      (payment) => selectedPlan === payment.attributes.plan.data.id
+    );
+  };
+  useEffect(() => {
+    setCurrentPaymentsData(filterPayments(memberPayments));
+  }, [memberPayments, selectedPlan]);
+
+  const getRecivedAmount = (id) => {
+    const currentUserPaymentsData = currentPaymentsData?.filter(
+      (paymentData) => paymentData?.attributes?.user?.data?.id == id
+    );
+    const totalAmountPaid = currentUserPaymentsData?.reduce((acc, curr) => {
+      return acc + curr.attributes.amount_paid;
+    }, 0);
+    console.log(totalAmountPaid);
+    return totalAmountPaid ?? 0;
+  };
+
   const dataSet = data?.usersPermissionsUsers?.data.map((user) => ({
     id: user.id,
     photo:
@@ -142,8 +163,10 @@ const AllMembersTable = () => {
       user.attributes?.firstname && user.attributes?.lastname
         ? `${user.attributes.firstname} ${user.attributes.lastname}`
         : 'Unknown Name',
-    total_amount: selectedPlan,
-    // recived_amount:
+    total_amount: currentPlanData?.attributes?.amount,
+    recived_amount: getRecivedAmount(user.id),
+    due_amount: currentPlanData?.attributes?.amount - getRecivedAmount(user.id),
+    plan: currentPlanData?.attributes?.plan_name,
   }));
 
   const handleAddAmount = () => {
@@ -166,16 +189,18 @@ const AllMembersTable = () => {
     { field: 'due_amount', headerName: 'Due Amount', width: 200 },
     { field: 'plan', headerName: 'Plan', width: 200 },
     {
-      field: 'add_amount',
+      field: 'addamount',
       headerName: 'Add Amount',
       width: 200,
-      renderCell: (params) => {
+      renderCell: (params) => (
         <Button
           variant="contained"
           color="primary"
-          onClick={() => handleAddAmount}
-        ></Button>;
-      },
+          onClick={() => handleAddAmount(params.row.id)}
+        >
+          Add Amount
+        </Button>
+      ),
     },
     {
       field: 'showDetails',
@@ -187,7 +212,21 @@ const AllMembersTable = () => {
           color="primary"
           onClick={() => handleShowDetails(params.row.id)}
         >
-          Show Details
+          Add Amount
+        </Button>
+      ),
+    },
+    {
+      field: 'hcmshowDetails',
+      headerName: 'Show Details',
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleShowDetails(params.row.id)}
+        >
+          HCM Details
         </Button>
       ),
     },
@@ -204,12 +243,12 @@ const AllMembersTable = () => {
   });
 
   const handleChange = (e) => {
-    console.log(e.target.value);
-    setSelectedPlan(e.target.value);
-    setCurrentPlanData(
-      planDetails.plans.data.filter((id) => id === e.target.value)
+    const selectedPlanId = e.target.value;
+    setSelectedPlan(selectedPlanId);
+    const selectedPlanData = planDetails?.plans?.data.find(
+      (plan) => plan.id === selectedPlanId
     );
-    console.log(currentPlanData);
+    setCurrentPlanData(selectedPlanData);
   };
 
   return (
@@ -219,15 +258,17 @@ const AllMembersTable = () => {
           Create Plan
         </Button>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={selectedPlan}
+          labelId="plan-select-label"
+          id="plan-select"
+          value={selectedPlan || ''}
           label="Plan"
-          onChange={handleChange}
+          onChange={(e) => handleChange(e)}
         >
           {planDetails?.plans?.data?.map((plan) => {
             return (
-              <MenuItem value={plan.id}>{plan.attributes?.plan_name}</MenuItem>
+              <MenuItem key={plan.id} value={plan.id}>
+                {plan.attributes?.plan_name}
+              </MenuItem>
             );
           })}
         </Select>
@@ -317,7 +358,7 @@ const AllMembersTable = () => {
           </form>
         </Box>
       </Modal>
-      {dataSet && dataSet.length > 0 ? (
+      {dataSet && dataSet.length > 0 && currentPlanData ? (
         <DataGrid
           columns={columns}
           rows={dataSet}

@@ -1,0 +1,34 @@
+.public-business-profile {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-section {
+  margin: 0 auto;
+}
+
+.business-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f1dc;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  padding: 1rem 0.5rem;
+  gap: 2rem;
+}
+
+.businessname {
+  display: flex;
+  flex-direction: column;
+}
+
+.location-info {
+  background-color: #f5f1dc;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  text-align: center;
+}

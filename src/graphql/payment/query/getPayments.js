@@ -8,6 +8,11 @@ export const GET_PAYMENTS = gql`
         attributes {
           payment_id
           amount_paid
+          user {
+            data {
+              id
+            }
+          }
           plan {
             data {
               id

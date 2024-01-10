@@ -1,5 +1,6 @@
 .shop-card-details {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-around;
   gap: 2rem;
@@ -16,4 +17,15 @@
 
 .business-details {
   padding-bottom: 5rem;
+}
+
+.shop-interaction-btns {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 764px) {
+  .shop-interaction-btns {
+    flex-direction: row;
+  }
 }

@@ -8,6 +8,9 @@ const MapWithMultiplePins = ({ locations }) => {
     return <div>Loading...</div>;
   }
 
+  if (locations.length) {
+  }
+
   const bangaloreLocations = [
     { id: 1, name: 'Bangalore Palace', latitude: 12.9985, longitude: 77.5923 },
     {
@@ -71,17 +74,27 @@ const MapWithMultiplePins = ({ locations }) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      {bangaloreLocations?.map(
-        (location) =>
-          location && (
-            <Marker
-              key={location.key}
-              position={[location.latitude, location.longitude]}
-              icon={redIcon}
-            >
-              <Popup>{location.name}</Popup>
-            </Marker>
-          )
+      {locations.length ? (
+        <Marker
+          key={locations[0].key}
+          position={[locations[0].latitude, locations[0].longitude]}
+          icon={redIcon}
+        >
+          <Popup>{location.name}</Popup>
+        </Marker>
+      ) : (
+        bangaloreLocations?.map(
+          (location) =>
+            location && (
+              <Marker
+                key={location.key}
+                position={[location.latitude, location.longitude]}
+                icon={redIcon}
+              >
+                <Popup>{location.name}</Popup>
+              </Marker>
+            )
+        )
       )}
     </MapContainer>
   );
