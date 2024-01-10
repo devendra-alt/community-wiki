@@ -48,7 +48,7 @@ function ResponsiveAppBar() {
         dispatch(setAuthState({ jwt, id: user.id }));
       })
       .then(() => {
-        navigate('/community');
+        navigate('/temple');
         window.location.reload();
       })
 
