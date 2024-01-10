@@ -67,7 +67,7 @@ export default function BusinessCard({ business, user }) {
           <div className="business-information">
             <div className="field">
               <p className="details-title">Business Name</p>
-              <p>{name}</p>
+              <p>{name ?? 'User'}</p>
             </div>
             <div className="field">
               <p className="details-title">Owner Name</p>
@@ -128,7 +128,16 @@ export default function BusinessCard({ business, user }) {
           </div>
           <div className="location-details">
             <Typography paragraph>Businees Locations</Typography>
-            {/* <MapWithMultiplePins locations={[]} /> */}
+            <MapWithMultiplePins
+              locations={[
+                {
+                  id: 9,
+                  name: 'Innovative Film City',
+                  latitude: 13.013,
+                  longitude: 77.6262,
+                },
+              ]}
+            />
           </div>
         </CardContent>
       </Collapse>

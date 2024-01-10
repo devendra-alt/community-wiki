@@ -2,6 +2,8 @@ import { useQuery } from '@apollo/client';
 import React from 'react';
 import { useParams } from 'react-router';
 import GET_SHOP from '../../../../graphql/shop/query/getShop';
+import './publicBusinessCard.css';
+import MapWithMultiplePins from '../../../address/render/plot';
 
 export default function PublicBusinessCard() {
   const { shopId } = useParams();
@@ -52,6 +54,26 @@ export default function PublicBusinessCard() {
           <h5>{experience(startdate)}</h5>
           <p className="info-meta">Experience</p>
         </div>
+      </div>
+      <div className="location-info">
+        <div className="location-data">
+          <h5>
+            605506 <br></br> RdLingarajapuram, Bengaluru,<br></br> Karnataka
+            560084
+          </h5>
+        </div>
+      </div>
+      <div className="address-map">
+        <MapWithMultiplePins
+          locations={[
+            {
+              id: 9,
+              name: 'Innovative Film City',
+              latitude: 13.013,
+              longitude: 77.6262,
+            },
+          ]}
+        />
       </div>
     </div>
   );

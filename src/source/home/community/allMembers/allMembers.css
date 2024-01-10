@@ -9,7 +9,20 @@
 
 .flex {
   display: flex;
-  gap: 0.3rem;
+}
+
+.member-age,
+.address,
+.occupation,
+.no-of-shops,
+.mobile,
+.location {
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-size: 0.8rem;
 }
 
 .member-age > span:first-child,
@@ -20,9 +33,11 @@
 .location > span:first-child {
   font-weight: 600;
   color: #ffb03a;
-  text-transform: uppercase;
-  display: inline-block;
   padding-right: 0.4rem;
+}
+
+.member-info {
+  text-align: center;
 }
 
 .actions {
