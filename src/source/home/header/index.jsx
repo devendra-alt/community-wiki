@@ -13,6 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import logo from '../../../assets/images/640px-Seervi_(Kshatariya)_Samaj.png';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../redux/feature/authSlice';
 
 const pages = ['temple', 'community', 'shop'];
 const settings = ['profile', 'logout'];
@@ -38,11 +40,16 @@ function ResponsiveAppBar() {
     else if (page === 'collection') navigation('/collection');
   };
 
+  const dispatch = useDispatch();
+
   const handleCloseUserMenu = (setting) => {
     setAnchorElUser(null);
     const userId = localStorage.getItem('id');
     if (setting === 'profile') {
       navigation(`/user-details/${userId}`);
+    } else {
+      dispatch(logout());
+      window.location.reload();
     }
   };
 

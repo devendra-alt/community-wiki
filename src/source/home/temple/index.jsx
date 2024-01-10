@@ -114,13 +114,7 @@ data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoHCBUVFBcVFRUXGBcaGx4aG
           <CustomTabPanel value={value} index={0}>
             {Array.from([1, 2, 3]).map((value, index) => (
               <div className="member-card">
-                <img
-                  src={
-                    memberDetails?.photo?.data?.attributes?.formats?.thumbnail
-                      ?.url ?? { logo }
-                  }
-                  width={'244px'}
-                />
+                <img src={logo} width={'244px'} />
                 <div className="memeber-info">
                   <h3 className="memeber-name">
                     {memberDetails?.username ?? 'USER'}
