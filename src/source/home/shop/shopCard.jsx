@@ -9,7 +9,7 @@ const ShopCard = ({ business }) => {
       style={{ display: 'flex', flexWrap: 'wrap' }}
     >
       <img
-        src={business.attributes.logo.data[0].attributes.url}
+        src={business?.attributes?.logo?.data[0]?.attributes?.url}
         width="280"
         height="280"
       />

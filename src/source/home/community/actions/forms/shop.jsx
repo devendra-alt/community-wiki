@@ -109,6 +109,7 @@ const WorkDetailsForm = ({
           />
           <TextField
             fullWidth
+            variant="standard"
             label="Start Date"
             name="startdate"
             type="date"
