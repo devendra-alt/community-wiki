@@ -88,7 +88,7 @@ export default function Community() {
           <AllMembersList data={dataSet} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <AllMembersList data={[...dataSet]} />
+          <AllMembersList data={dataSet} />
         </CustomTabPanel>
       </Box>
     </section>
