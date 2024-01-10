@@ -2,6 +2,7 @@ import { memberExpression } from '@babel/types';
 import { Button } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from '../../../assets/default_image.jpeg';
 
 export default function MemberCard({ memberDetails }) {
   const navigator = useNavigate();
@@ -21,7 +22,7 @@ export default function MemberCard({ memberDetails }) {
       <img
         src={
           memberDetails?.photo?.data?.attributes?.formats?.thumbnail?.url ??
-          ' https://fastercapital.com/images/people/colored/harish_muleva.jpg?t=1'
+          logo
         }
         width={'244px'}
       />
@@ -54,7 +55,7 @@ export default function MemberCard({ memberDetails }) {
         <p className="location flex">
           <span>location</span>
           <span>current</span>
-      </p>
+        </p>
         <div className="user-card-actions">
           <Button className="user-card-action-btn">business</Button>
           <Button className="user-card-action-btn">address</Button>

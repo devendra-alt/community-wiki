@@ -11,6 +11,7 @@ import EditUser from './actions/editUser';
 import requestGetUserByID from './../../network/gql_requests/requestGetUserByID';
 import LocationCard from '../../address/render/locationCard';
 import EditEducation from '../education/actions/edit';
+import logo from '../../../assets/default_image.jpeg';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -91,7 +92,7 @@ export default function User() {
     <div className="user-details">
       <div className="header">
         <img
-          src="https://fastercapital.com/images/people/colored/harish_muleva.jpg?t=1"
+          src={logo}
           alt="profile-image"
           width="120px"
           height="150px"
