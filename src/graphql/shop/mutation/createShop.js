@@ -9,6 +9,7 @@ const CREATE_SHOP = gql`
     $address: [ID]
     $userId: ID
     $templeId: ID
+    $turnover: Int
   ) {
     createBusinessProfile(
       data: {
@@ -19,6 +20,7 @@ const CREATE_SHOP = gql`
         addresses: $address
         userid: $userId
         temple: $templeId
+        turnover: $turnover
       }
     ) {
       data {

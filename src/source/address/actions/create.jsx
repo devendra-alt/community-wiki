@@ -3,7 +3,7 @@ import { TextField, Grid, Button } from '@mui/material';
 import fetchGeoData from '../webapi/getGeodetails';
 import requestCreateAddress from '../../network/gql_requests/requestCreateAddress';
 
-export default function CreateAddress({ setAddressId, addressType }) {
+export default function CreateAddress({ setAddressId, addressType,setShowAddAddress }) {
   const [addressFormData, setAdddressFormData] = useState({
     pinCode: Number('000000'),
     district: '',
@@ -13,6 +13,7 @@ export default function CreateAddress({ setAddressId, addressType }) {
     longitude: '',
     completAddress: '',
     addresstype: addressType,
+     
   });
 
   const [error, setError] = useState(false);
@@ -66,6 +67,18 @@ export default function CreateAddress({ setAddressId, addressType }) {
     console.log(addressFormData);
     const addressData = await requestCreateAddress(addressFormData);
     setAddressId(addressData?.createAddress?.data.id);
+    setAdddressFormData({
+      pinCode: Number('000000'),
+      district: '',
+      city: '',
+      state: '',
+      latitude: '',
+      longitude: '',
+      completAddress: '',
+      addresstype: addressType,
+       
+    })
+    setShowAddAddress(false)
   };
 
   return (

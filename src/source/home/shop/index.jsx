@@ -108,6 +108,7 @@ export default function Shops() {
             // style={{ overflow: 'scroll' }}
             aria-labelledby="parent-modal-title"
             aria-describedby="parent-modal-description"
+            style={{ overflow: 'scroll' }}
           >
             <Box
               sx={{

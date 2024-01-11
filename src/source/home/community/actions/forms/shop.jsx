@@ -7,9 +7,12 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Grid,
 } from '@mui/material';
 import fetchGeoData from '../../../../address/webapi/getGeodetails';
 import CreateAddress from '../../../../address/actions/create';
+import requestCreateShop from '../../../../network/gql_requests/requestCreateShop';
+
 
 const WorkDetailsForm = ({
   formDataPersist,
@@ -24,7 +27,7 @@ const WorkDetailsForm = ({
 
   const handleInputChange = async (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
+    // console.log(name, value);
     if (name === 'pinCode' && value.toString().length === 6) {
       try {
         const response = await fetchGeoData(value.toString());
@@ -42,7 +45,7 @@ const WorkDetailsForm = ({
           );
           return updatedArray;
         });
-        console.log(formDataPersist);
+        // console.log(formDataPersist);
       } catch (error) {
         console.error('Error fetching geo data:', error);
       }
@@ -56,7 +59,7 @@ const WorkDetailsForm = ({
         });
         return updatedState;
       });
-      console.log(formDataPersist);
+      
     }
   };
 
@@ -65,7 +68,8 @@ const WorkDetailsForm = ({
     setFormDataPersist({ ...formDataPersist, multipleImages: files });
   };
 
-  const [addAddress, setAddAddress] = useState(false);
+  const [showAddAddress, setShowAddAddress] = useState(false);
+  const [addAddressId, setAddAddressId] = useState();
 
   const consumerMarkets = [
     '',
@@ -78,6 +82,43 @@ const WorkDetailsForm = ({
     'Sporting Goods Market',
     'Automobile Market',
   ];
+  console.log(new Date(formDataPersist[1].startdate).toISOString().split('T')[0]);
+
+  const saveShop=()=>{
+    
+    if(addAddressId!=undefined){
+      const shopMutationData={
+        type: formDataPersist[1].businessType,
+        subtype: formDataPersist[1].businessSubType,
+        name: formDataPersist[1].shopName,
+        startDate: new Date(formDataPersist[1].startdate).toISOString().split('T')[0],
+        address:[addAddressId],
+        turnover: Number(formDataPersist[1].turnover),
+        templeId: localStorage.getItem('templeId')
+
+      }
+      requestCreateShop(shopMutationData).then(()=>{
+        console.log("createdShop");
+        setAddAddressId()
+        setFormDataPersist([{},
+          {
+            shopName: '',
+            yearEstablished: '',
+            multipleImages: [],
+            defaultImage: '',
+            businessType: '',
+            businessSubType: '',
+            jobType: '',
+            startdate: '12/30/2000',
+            turnover: 0,
+          },
+          {},])
+      })
+       
+
+    }
+
+  }
 
   return (
     <Container maxWidth="sm">
@@ -162,11 +203,11 @@ const WorkDetailsForm = ({
             onChange={handleInputChange}
             margin="normal"
           />
-          <Button variant="outlined" onClick={() => setAddAddress(true)}>
+          <Button variant="outlined" onClick={() => setShowAddAddress(true)}>
             Add Address
           </Button>
-          {addAddress && (
-            <CreateAddress setAddressId={setAddAddress} addressType={'SHOP'} />
+          {showAddAddress && (
+            <CreateAddress setShowAddAddress={setShowAddAddress} setAddressId={setAddAddressId} addressType={'SHOP'} />
           )}
         </form>
       )}
@@ -194,6 +235,11 @@ const WorkDetailsForm = ({
           />
         </form>
       )}
+      <Grid item xs={12} md={6}>
+        <Button disabled={addAddressId===undefined?true:false}  variant="outlined" onClick={() => saveShop()}>
+          Save Shop
+        </Button>
+      </Grid>
     </Container>
   );
 };
