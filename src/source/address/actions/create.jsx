@@ -20,9 +20,7 @@ export default function CreateAddress({ setAddressId, addressType }) {
     const { name, value } = e.target;
     if (name === 'pinCode' && value.toString().length === 6) {
       try {
-        const response = await fetchGeoData(value.toString(), {
-          mode: 'no-cors',
-        });
+        const response = await fetchGeoData(value.toString());
         const data = response.data[0];
         setAdddressFormData((prevState) => {
           return {

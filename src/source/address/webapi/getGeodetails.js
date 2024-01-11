@@ -1,8 +1,7 @@
 const fetchGeoData = async (url, options = {}) => {
   try {
-    debugger;
     const response = await fetch(
-      `http://164.52.200.133:8090/api/configuration-management/get-address?pincode=${url}`,
+      `https://eksamaj.in/pincode/api/configuration-management/get-address?pincode=${url}`,
       options
     );
 
