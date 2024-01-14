@@ -13,7 +13,6 @@ import fetchGeoData from '../../../../address/webapi/getGeodetails';
 import CreateAddress from '../../../../address/actions/create';
 import requestCreateShop from '../../../../network/gql_requests/requestCreateShop';
 
-
 const WorkDetailsForm = ({
   formDataPersist,
   setFormDataPersist,
@@ -59,7 +58,6 @@ const WorkDetailsForm = ({
         });
         return updatedState;
       });
-      
     }
   };
 
@@ -82,25 +80,25 @@ const WorkDetailsForm = ({
     'Sporting Goods Market',
     'Automobile Market',
   ];
-  console.log(new Date(formDataPersist[1].startdate).toISOString().split('T')[0]);
 
-  const saveShop=()=>{
-    
-    if(addAddressId!=undefined){
-      const shopMutationData={
+  const saveShop = () => {
+    if (addAddressId != undefined) {
+      const shopMutationData = {
         type: formDataPersist[1].businessType,
         subtype: formDataPersist[1].businessSubType,
         name: formDataPersist[1].shopName,
-        startDate: new Date(formDataPersist[1].startdate).toISOString().split('T')[0],
-        address:[addAddressId],
+        startDate: new Date(formDataPersist[1].startdate)
+          .toISOString()
+          .split('T')[0],
+        address: [addAddressId],
         turnover: Number(formDataPersist[1].turnover),
-        templeId: localStorage.getItem('templeId')
-
-      }
-      requestCreateShop(shopMutationData).then(()=>{
-        console.log("createdShop");
-        setAddAddressId()
-        setFormDataPersist([{},
+        templeId: localStorage.getItem('templeId'),
+      };
+      requestCreateShop(shopMutationData).then(() => {
+        console.log('createdShop');
+        setAddAddressId();
+        setFormDataPersist([
+          {},
           {
             shopName: '',
             yearEstablished: '',
@@ -112,13 +110,11 @@ const WorkDetailsForm = ({
             startdate: '12/30/2000',
             turnover: 0,
           },
-          {},])
-      })
-       
-
+          {},
+        ]);
+      });
     }
-
-  }
+  };
 
   return (
     <Container maxWidth="sm">
@@ -207,7 +203,11 @@ const WorkDetailsForm = ({
             Add Address
           </Button>
           {showAddAddress && (
-            <CreateAddress setShowAddAddress={setShowAddAddress} setAddressId={setAddAddressId} addressType={'SHOP'} />
+            <CreateAddress
+              setShowAddAddress={setShowAddAddress}
+              setAddressId={setAddAddressId}
+              addressType={'SHOP'}
+            />
           )}
         </form>
       )}
@@ -236,7 +236,11 @@ const WorkDetailsForm = ({
         </form>
       )}
       <Grid item xs={12} md={6}>
-        <Button disabled={addAddressId===undefined?true:false}  variant="outlined" onClick={() => saveShop()}>
+        <Button
+          disabled={addAddressId === undefined ? true : false}
+          variant="outlined"
+          onClick={() => saveShop()}
+        >
           Save Shop
         </Button>
       </Grid>

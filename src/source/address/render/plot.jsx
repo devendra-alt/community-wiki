@@ -74,27 +74,17 @@ const MapWithMultiplePins = ({ locations }) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      {locations.length ? (
-        <Marker
-          key={locations[0].key}
-          position={[locations[0].latitude, locations[0].longitude]}
-          icon={redIcon}
-        >
-          <Popup>{location.name}</Popup>
-        </Marker>
-      ) : (
-        bangaloreLocations?.map(
-          (location) =>
-            location && (
-              <Marker
-                key={location.key}
-                position={[location.latitude, location.longitude]}
-                icon={redIcon}
-              >
-                <Popup>{location.name}</Popup>
-              </Marker>
-            )
-        )
+      {bangaloreLocations?.map(
+        (location) =>
+          location && (
+            <Marker
+              key={location.key}
+              position={[location.latitude, location.longitude]}
+              icon={redIcon}
+            >
+              <Popup>{location.name}</Popup>
+            </Marker>
+          )
       )}
     </MapContainer>
   );
