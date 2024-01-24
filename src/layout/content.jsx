@@ -1,31 +1,31 @@
 import React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import Community from '../source/home/community';
-import Temple from '../source/home/temple';
-import User from '../source/home/user';
-import Shops from '../source/home/shop';
-import Collection from '../source/home/collection';
-import PublicBusinessCard from '../source/home/business/public/publicBusinessCard';
+import { Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { adminRoutes, publicRoutes } from './routes';
+import Loading from '../assets/spin';
+import DefaultRender from '../utils/default';
 
 export default function Content() {
+  const { userRole } = useSelector((state) => state.auth);
+  const routes =
+    userRole === 'ADMIN' ? [...publicRoutes, ...adminRoutes] : publicRoutes;
   return (
     <Routes>
-      <Route path="/" exact={true} element={<Navigate to="/temple" />}></Route>
-      <Route
-        path="/community"
-        key="/community"
-        exact={true}
-        element={<Community />}
-      />
-      <Route path="/temple" exact={true} element={<Temple />} />
-      <Route path="/user-details/:id" exact={true} element={<User />} />
-      <Route path="/shops" exact={true} element={<Shops />} />
-      <Route
-        path="/shops/shop/:shopId"
-        exact={true}
-        element={<PublicBusinessCard></PublicBusinessCard>}
-      />
-      <Route path="/collection" exact={true} element={<Collection />} />
+      {routes?.map((route, index) => {
+        return (
+          <Route
+            path={route.path}
+            exact={route.exact}
+            key={index}
+            element={route.element}
+          />
+        );
+      })}
+      {routes.length == 0 ? (
+        <Route path="*" element={<Loading />} />
+      ) : (
+        <Route path="*" element={<DefaultRender />} />
+      )}
     </Routes>
   );
 }
