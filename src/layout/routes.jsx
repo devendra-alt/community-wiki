@@ -14,6 +14,15 @@ import Loading from '../assets/spin';
 const LazySuspense = ({ children }) => {
   return <Suspense fallback={<Loading />}>{children}</Suspense>;
 };
+
+const commonMenuItems = [
+  { name: 'temple', path: '/temple' },
+  { name: 'community', path: '/community' },
+  { name: 'shops', path: '/shops' },
+];
+
+const adminMenuItems = [{ name: 'collection', path: '/collection' }];
+
 const publicRoutes = [
   {
     path: '/',
@@ -54,3 +63,7 @@ const adminRoutes = [
     element: <LazySuspense children={<CollectionComponent />} />,
   },
 ];
+
+export { adminRoutes, publicRoutes };
+
+export { commonMenuItems, adminMenuItems };
