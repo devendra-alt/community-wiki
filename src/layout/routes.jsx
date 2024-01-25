@@ -8,6 +8,8 @@ const PublicBusinessCardComponent = lazy(() =>
   import('../source/home/business/public/publicBusinessCard')
 );
 const CollectionComponent = lazy(() => import('../source/home/collection'));
+const SuperUserComponent = lazy(() => import('../source/home/superuser'));
+
 import { Navigate } from 'react-router-dom';
 import Loading from '../assets/spin';
 
@@ -22,6 +24,8 @@ const commonMenuItems = [
 ];
 
 const adminMenuItems = [{ name: 'collection', path: '/collection' }];
+
+const superAdminMenuItems = [{ name: 'super Admin', path: '/super-admin' }];
 
 const publicRoutes = [
   {
@@ -64,6 +68,14 @@ const adminRoutes = [
   },
 ];
 
-export { adminRoutes, publicRoutes };
+const superAdminRoutes = [
+  {
+    path: '/super-admin',
+    exact: true,
+    element: <LazySuspense children={<SuperUserComponent />} />,
+  },
+];
 
-export { commonMenuItems, adminMenuItems };
+export { adminRoutes, publicRoutes, superAdminRoutes };
+
+export { commonMenuItems, adminMenuItems, superAdminMenuItems };

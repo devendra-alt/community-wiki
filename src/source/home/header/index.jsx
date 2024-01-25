@@ -15,7 +15,11 @@ import logo from '../../../assets/images/640px-Seervi_(Kshatariya)_Samaj.png';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../../redux/feature/authSlice';
-import { adminMenuItems, commonMenuItems } from '../../../layout/routes';
+import {
+  adminMenuItems,
+  commonMenuItems,
+  superAdminMenuItems,
+} from '../../../layout/routes';
 
 const settings = ['profile', 'logout'];
 
@@ -25,12 +29,14 @@ function ResponsiveAppBar() {
 
   const { userRole } = useSelector((state) => state.auth);
 
-  const pages =
-    userRole === 'ADMIN'
-      ? [...commonMenuItems, ...adminMenuItems]
-      : commonMenuItems;
+  const pages = [...commonMenuItems];
 
-  console.log(pages);
+  switch (userRole) {
+    case 'ADMIN':
+      pages.push(...adminMenuItems);
+    case 'SUPER_ADMIN':
+      pages.push(...adminMenuItems, ...superAdminMenuItems);
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
