@@ -28,15 +28,19 @@ function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const { userRole } = useSelector((state) => state.auth);
-
+  
   const pages = [...commonMenuItems];
 
   switch (userRole) {
     case 'ADMIN':
       pages.push(...adminMenuItems);
+      break;
     case 'SUPER_ADMIN':
       pages.push(...adminMenuItems, ...superAdminMenuItems);
+      break;
   }
+
+  
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
