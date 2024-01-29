@@ -7,7 +7,7 @@ const CREATE_ADDRESS = gql`
     $address_raw: String
     $latitude: Float
     $longitude: Float
-    $pincode: Int
+    $pinCode: Int
     $state: String
     $housename: String
     $landmark: String
@@ -19,7 +19,7 @@ const CREATE_ADDRESS = gql`
         address_raw: $address_raw
         latitude: $latitude
         longitude: $longitude
-        pincode: $pincode
+        pincode: $pinCode
         state: $state
         housename: $housename
         landmark: $landmark

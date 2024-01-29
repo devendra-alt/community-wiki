@@ -3,6 +3,8 @@ import CREATE_ADDRESS from '../../../graphql/address/mutation/createAddress';
 
 const requestCreateAddress = async (addressData) => {
   try {
+    // addressData.pinCode=Number(addressData.pinCode)
+    // console.log(addressData);
     const { data } = await client.mutate({
       mutation: CREATE_ADDRESS,
       variables: addressData,

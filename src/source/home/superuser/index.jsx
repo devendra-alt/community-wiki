@@ -86,6 +86,9 @@ export default function BasicModal() {
     )
   };
 
+
+  // console.log(data);
+
   return (
     <div style={{ padding: '2rem' }}>
       <Button variant="outlined" onClick={handleOpen}>

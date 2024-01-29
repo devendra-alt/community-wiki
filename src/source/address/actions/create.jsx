@@ -26,7 +26,7 @@ export default function CreateAddress({ setAddressId, addressType,setShowAddAddr
         setAdddressFormData((prevState) => {
           return {
             ...prevState,
-            [name]: value,
+            [name]: Number(value),
             district: data?.districtname ?? '',
             city: data?.city ?? '',
             state: data?.statename ?? '',
@@ -64,7 +64,7 @@ export default function CreateAddress({ setAddressId, addressType,setShowAddAddr
   };
 
   const saveAddress = async () => {
-    console.log(addressFormData);
+    // console.log(addressFormData);
     const addressData = await requestCreateAddress(addressFormData);
     setAddressId(addressData?.createAddress?.data.id);
     setAdddressFormData({
