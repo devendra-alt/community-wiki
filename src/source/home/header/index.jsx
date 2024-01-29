@@ -13,15 +13,24 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import logo from '../../../assets/images/640px-Seervi_(Kshatariya)_Samaj.png';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../../redux/feature/authSlice';
+import { adminMenuItems, commonMenuItems } from '../../../layout/routes';
 
-const pages = ['temple', 'community', 'shop'];
 const settings = ['profile', 'logout'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const { userRole } = useSelector((state) => state.auth);
+
+  const pages =
+    userRole === 'ADMIN'
+      ? [...commonMenuItems, ...adminMenuItems]
+      : commonMenuItems;
+
+  console.log(pages);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -32,12 +41,9 @@ function ResponsiveAppBar() {
 
   const navigation = useNavigate();
 
-  const handleCloseNavMenu = (page) => {
+  const handleCloseNavMenu = (path) => {
     setAnchorElNav(null);
-    if (page === 'community') navigation('/community');
-    else if (page === 'temple') navigation('/temple');
-    else if (page === 'shop') navigation('/shops');
-    else if (page === 'collection') navigation('/collection');
+    navigation(path);
   };
 
   const dispatch = useDispatch();
@@ -105,9 +111,12 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
+                <MenuItem
+                  key={page.name}
+                  onClick={() => handleCloseNavMenu(page.path)}
+                >
                   <Typography textAlign="center">
-                    {page.toString().toUpperCase()}
+                    {page.name.toString().toUpperCase()}
                   </Typography>
                 </MenuItem>
               ))}
@@ -134,11 +143,11 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={() => handleCloseNavMenu(page)}
+                key={page.name}
+                onClick={() => handleCloseNavMenu(page.path)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                {page.name}
               </Button>
             ))}
           </Box>

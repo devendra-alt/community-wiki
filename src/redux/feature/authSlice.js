@@ -26,13 +26,6 @@ export const authSlice = createSlice({
       state.isLoggedIn = false;
       localStorage.clear();
     },
-    setUserRoles: (state, actions) => {
-      state.userRoles = actions.payload;
-      localStorage.setItem('selectedRoles', state.userRoles);
-    },
-    getUserRoles: (state) => {
-      state.userRoles = localStorage.getItem('selectedRoles');
-    },
     setUserRole: (state, actions) => {
       state.userRole = actions.payload;
       localStorage.setItem('selectedRole', state.userRole);

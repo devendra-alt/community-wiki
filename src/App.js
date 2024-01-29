@@ -4,7 +4,7 @@ import Content from './layout/content';
 import { useQuery } from '@apollo/client';
 import GET_USER from './graphql/user/query/getUser';
 import { useDispatch } from 'react-redux';
-import { setUserData } from './redux/feature/authSlice';
+import { setUserData, setUserRole } from './redux/feature/authSlice';
 
 export default function App() {
   const id = localStorage.getItem('id');
@@ -12,6 +12,7 @@ export default function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setUserData(data));
+    dispatch(setUserRole(data?.usersPermissionsUser?.data?.attributes?.myrole));
   }, [data]);
   return (
     <>
