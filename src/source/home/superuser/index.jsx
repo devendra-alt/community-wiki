@@ -5,10 +5,13 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Container, Grid, Switch, FormControlLabel, TextField } from '@mui/material';
 import CreateAddress from '../../address/actions/create';
- 
-import { useMutation } from '@apollo/client';
+
+import { useMutation, useQuery } from '@apollo/client';
 import CREATE_TEMPLE from '../../../graphql/temple/mutation/createTEmple';
- 
+
+import GET_TEMPLES from '../../../graphql/temple/query/getTemples';
+import TempleCard from './templeCard';
+
 
 
 
@@ -37,7 +40,7 @@ export default function BasicModal() {
   const [addAddressId, setAddAddressId] = React.useState();
 
   const [createTemple] = useMutation(CREATE_TEMPLE)
-
+  const { data } = useQuery(GET_TEMPLES)
 
   // State object to store form field values
   const [formValues, setFormValues] = React.useState({
@@ -64,7 +67,12 @@ export default function BasicModal() {
       variables: {
         ...formValues,
         addressId: addAddressId
-      }
+      },
+      refetchQueries: [
+        {
+          query: GET_TEMPLES
+        }
+      ]
     }).then(() => {
       setFormValues({
         name: '',
@@ -170,6 +178,16 @@ export default function BasicModal() {
           </Container>
         </Box>
       </Modal>
+      <ul style={{ padding: '1rem' }}>
+        {data?.temples.data.map((temple, index) => {
+          return (
+            <li style={{ marginBottom: '1rem' }} key={index}>
+              <TempleCard temple={temple} />
+            </li>
+          );
+        })}
+      </ul>
+
     </div>
   );
 }
