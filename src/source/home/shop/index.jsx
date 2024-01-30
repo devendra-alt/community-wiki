@@ -167,55 +167,54 @@ export default function Shops() {
             aria-describedby="parent-modal-description"
             style={{ overflow: 'scroll' }}
           >
-            <Box
-              sx={{
-                background: '#fff',
-                width: '80%',
-                margin: '40px auto',
-              }}
-            >
+             
 
-              <h5>User</h5>
-              <Autocomplete
-                disablePortal
-                id="user-selector"
-                options={newArray}
-                sx={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label="Select User" />}
-                renderOption={(props, option) => (
-                  <li {...props}>
-                    <img
-                      src={option.imageUrl}
-                      alt={`Avatar of ${option.label}`}
-                      style={{ width: 24, height: 24, marginRight: 8, borderRadius: '50%' }}
-                    />
-                    {option.label}
-                  </li>
-                )}
-                onChange={(event, selectedOption) => {
-                  if (selectedOption) {
-                    // console.log(selectedOption.value); // Access the selected option's value
-                    setBusineesOwnerId(selectedOption.value)
-                  }
+              <div style={{display:"flex",flexDirection:"column",justifyContent:"center",background:"white",alignItems:"center"}}>
+                <h5>User</h5>
+                <Autocomplete
+                  disablePortal
+                  id="user-selector"
+                  options={newArray}
+                  sx={{ width: 300 }}
+                  renderInput={(params) => <TextField {...params} label="Select User" />}
+                  renderOption={(props, option) => (
+                    <li {...props}>
+                      <img
+                        src={option.imageUrl}
+                        alt={`Avatar of ${option.label}`}
+                        style={{ width: 24, height: 24, marginRight: 8, borderRadius: '50%' }}
+                      />
+                      {option.label}
+                    </li>
+                  )}
+                  onChange={(event, selectedOption) => {
+                    if (selectedOption) {
+                      // console.log(selectedOption.value); // Access the selected option's value
+                      setBusineesOwnerId(selectedOption.value)
+                    }
 
-                }}
-              ></Autocomplete>
+                  }}
+                ></Autocomplete>
 
-              <WorkDetailsForm
-                formDataPersist={formDataPersist}
-                setFormDataPersist={setFormDataPersist}
-                setAddressId={setAddAddressId}
-              />
-              <Grid item xs={12} md={6}>
-                <Button
-                  disabled={addAddressId === undefined ? true : false}
-                  variant="outlined"
-                  onClick={() => saveShop()}
-                >
-                  Save Shop
-                </Button>
-              </Grid>
-            </Box>
+                <WorkDetailsForm
+                  formDataPersist={formDataPersist}
+                  setFormDataPersist={setFormDataPersist}
+                  setAddressId={setAddAddressId}
+                />
+                <Grid item xs={12} md={6}>
+                  <Button
+                    disabled={addAddressId === undefined ? true : false}
+                    variant="outlined"
+                    onClick={() => saveShop()}
+                  >
+                    Save Shop
+                  </Button>
+                </Grid>
+
+              </div>
+
+
+            
           </Modal>
         </>
       ) : (
