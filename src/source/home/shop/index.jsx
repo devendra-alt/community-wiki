@@ -10,9 +10,14 @@ import ShopCard from './shopCard';
 import MapWithMultiplePins from '../../address/render/plot';
 import GET_SHOP_PLOTS from '../../../graphql/shop/query/getShopPlots';
 import './shop.css';
-import { Button, Modal } from '@mui/material';
+import { Autocomplete, Button, FormControl, Grid, Modal, TextField } from '@mui/material';
 import { useSelector } from 'react-redux';
 import WorkDetailsForm from '../community/actions/forms/shop';
+import { GET_USERS_BY_TEMPLE } from '../../../graphql/user/query/getUsersByTemple';
+import requestCreateShop from '../../network/gql_requests/requestCreateShop';
+
+
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -69,6 +74,20 @@ export default function Shops() {
 
   const [addShop, setAddShop] = useState(false);
   const [addMemberShop, setAddMemberShop] = useState(false);
+  const [addAddressId, setAddAddressId] = useState();
+
+  const { data: templeUsers } = useQuery(GET_USERS_BY_TEMPLE, {
+    variables: { templeID: localStorage.getItem('templeId') },
+  });
+  // console.log(data);
+  const [businessOwnerId, setBusineesOwnerId] = useState()
+
+  const newArray = templeUsers?.usersPermissionsUsers.data.map(user =>
+  ({
+    label: user.attributes.firstname == null || user.attributes.lastname == null ? `${user.attributes.username}` : `${user.attributes.firstname} ${user.attributes.lastname}`,
+    value: user.id,
+    imageUrl: user?.attributes?.photo?.data?.attributes?.formats?.thumbnail?.url ?? 'https://hphlms.s3.amazonaws.com/user_logo_18061e52bb.png'
+  }));
 
   const formData = [
     {},
@@ -86,7 +105,45 @@ export default function Shops() {
     {},
   ];
 
-  const [form, setForm] = useState(formData);
+  const [formDataPersist, setFormDataPersist] = useState(formData);
+
+
+  const saveShop = () => {
+
+    if (addAddressId != undefined) {
+      const shopMutationData = {
+        type: formDataPersist[1].businessType,
+        subtype: formDataPersist[1].businessSubType,
+        name: formDataPersist[1].shopName,
+        startDate: new Date(formDataPersist[1].startdate).toISOString().split('T')[0],
+        address: [addAddressId],
+        turnover: Number(formDataPersist[1].turnover),
+        templeId: localStorage.getItem('templeId'),
+        userId: businessOwnerId
+
+      }
+      requestCreateShop(shopMutationData).then(() => {
+        // console.log("createdShop");
+        setAddAddressId()
+        setBusineesOwnerId()
+        setFormDataPersist([{},
+        {
+          shopName: '',
+          yearEstablished: '',
+          multipleImages: [],
+          defaultImage: '',
+          businessType: '',
+          businessSubType: '',
+          jobType: '',
+          startdate: '12/30/2000',
+          turnover: 0,
+        },
+        {},])
+      })
+
+
+    }
+  };
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -117,10 +174,47 @@ export default function Shops() {
                 margin: '40px auto',
               }}
             >
+
+              <h5>User</h5>
+              <Autocomplete
+                disablePortal
+                id="user-selector"
+                options={newArray}
+                sx={{ width: 300 }}
+                renderInput={(params) => <TextField {...params} label="Select User" />}
+                renderOption={(props, option) => (
+                  <li {...props}>
+                    <img
+                      src={option.imageUrl}
+                      alt={`Avatar of ${option.label}`}
+                      style={{ width: 24, height: 24, marginRight: 8, borderRadius: '50%' }}
+                    />
+                    {option.label}
+                  </li>
+                )}
+                onChange={(event, selectedOption) => {
+                  if (selectedOption) {
+                    // console.log(selectedOption.value); // Access the selected option's value
+                    setBusineesOwnerId(selectedOption.value)
+                  }
+
+                }}
+              ></Autocomplete>
+
               <WorkDetailsForm
-                formDataPersist={form}
-                setFormDataPersist={setForm}
+                formDataPersist={formDataPersist}
+                setFormDataPersist={setFormDataPersist}
+                setAddressId={setAddAddressId}
               />
+              <Grid item xs={12} md={6}>
+                <Button
+                  disabled={addAddressId === undefined ? true : false}
+                  variant="outlined"
+                  onClick={() => saveShop()}
+                >
+                  Save Shop
+                </Button>
+              </Grid>
             </Box>
           </Modal>
         </>
