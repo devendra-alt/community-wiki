@@ -65,7 +65,7 @@ export default function GeneralInfo({
   };
 
   const [error, setError] = useState(false);
-  const [addAddress, setAddAddress] = useState(false);
+  const [showAddAddress,setShowAddAddress] = useState(false);
 
   const setCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -295,13 +295,14 @@ export default function GeneralInfo({
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <Button variant="outlined" onClick={() => setAddAddress(true)}>
+            <Button variant="outlined" onClick={() => setShowAddAddress(true)}>
               Add Address
             </Button>
           </Grid>
 
-          {addAddress && (
+          {showAddAddress && (
             <CreateAddress
+              setShowAddAddress={setShowAddAddress}
               setAddressId={setAddressId}
               addressType={'PERSONAL'}
             />

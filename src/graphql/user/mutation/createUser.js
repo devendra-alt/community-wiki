@@ -20,6 +20,7 @@ export const CREATE_USER = gql`
     $email: String
     $password: String
     $address_id: [ID]
+    $myRole:ENUM_USERSPERMISSIONSUSER_MYROLE
   ) {
     createUsersPermissionsUser(
       data: {
@@ -41,6 +42,7 @@ export const CREATE_USER = gql`
         father_gotra: $father_gotra
         role: $role_Id
         addresses: $address_id
+        myrole: $myRole
       }
     ) {
       data {

@@ -6,7 +6,7 @@ import logo from '../../../assets/default_image.jpeg';
 
 export default function MemberCard({ memberDetails }) {
   const navigator = useNavigate();
-  console.log('memberDetails', memberDetails);
+  // console.log('memberDetails', memberDetails);
   function calculateAge(birthDate) {
     const today = new Date();
     const dob = new Date(birthDate);

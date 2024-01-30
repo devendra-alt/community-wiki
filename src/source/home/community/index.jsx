@@ -5,11 +5,12 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import AllMembersList from './allMembers';
-import AddMember from './actions/add';
+
 import { Button, Modal } from '@mui/material';
 import './community.css';
 import { useQuery } from '@apollo/client';
 import GET_USERS from './../../../graphql/user/query/getUsers';
+import { AddMember } from './actions/add';
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -71,7 +72,7 @@ export default function Community() {
         onClose={() => setAddMember(false)}
         style={{ overflow: 'scroll' }}
       >
-        {AddMember()}
+        <AddMember></AddMember>
       </Modal>
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

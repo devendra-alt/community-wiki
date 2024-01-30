@@ -35,7 +35,7 @@ const workInfoinitialValues = {
   turnover: 0,
 };
 
-export default function AddMember() {
+export const AddMember = ({ templeId, myRole }) => {
   const [formDataPersist, setFormDataPersist] = useState([
     { ...generalInfoinitialValues },
     { ...workInfoinitialValues },
@@ -74,6 +74,14 @@ export default function AddMember() {
       role_Id: 1,
     };
 
+    if (templeId) {
+      userFormData.temples = templeId
+    }
+
+    if (myRole) {
+      userFormData.myRole = myRole
+    }
+
     if (addressId) {
       userFormData.address_id = addressId;
     }
@@ -83,10 +91,12 @@ export default function AddMember() {
     }
 
     const userData = await requestCreateUser(userFormData);
+    console.log("userData",userData);
 
     if (formDataPersist[1].shopName === '') {
       return;
     }
+
 
     const userShopData = {
       type: formDataPersist[1].businessType,
@@ -97,13 +107,18 @@ export default function AddMember() {
     };
 
     if (shopAddressId) {
-      userShopData.addresses = shopAddressId;
+      userShopData.address = shopAddressId;
     }
 
-    if (userData?.createUsersPermissionsUser?.data?.id) {
-      userShopData.userId = userData?.createUsersPermissionsUser?.data?.id;
+    if (userData?.data?.createUsersPermissionsUser?.data?.id) {
+      console.log("f");
+      userShopData.userId = userData?.data?.createUsersPermissionsUser?.data?.id;
     }
+
+    console.log('userShopData',userShopData);
     const shopData = await requestCreateShop(userShopData);
+
+
   };
 
   return (
@@ -120,6 +135,7 @@ export default function AddMember() {
           formDataPersist={formDataPersist}
           setFormDataPersist={setFormDataPersist}
           setAddressId={setShopAddressId}
+           
         />
       ) : null}
       <div className="form-controller-btns">

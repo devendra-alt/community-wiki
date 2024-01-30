@@ -16,14 +16,20 @@ import CreateAddress from '../../../../address/actions/create';
 import requestCreateShop from '../../../../network/gql_requests/requestCreateShop';
 import { GET_USERS_BY_TEMPLE } from '../../../../../graphql/user/query/getUsersByTemple';
 import { useQuery } from '@apollo/client';
+import { useLocation } from 'react-router-dom';
 
 
 const WorkDetailsForm = ({
   formDataPersist,
   setFormDataPersist,
   setAddressId,
+  
 }) => {
   const [occupation, setOccupation] = useState('');
+
+
+  const location=useLocation()
+  console.log(location);
 
   const handleOccupationChange = (e) => {
     setOccupation(e.target.value);
@@ -144,7 +150,7 @@ const WorkDetailsForm = ({
 
   return (
     <Container maxWidth="sm">
-      <FormControl>
+      {location.pathname==='/shops'?<FormControl>
         <h5>User</h5>
         <Autocomplete
           disablePortal
@@ -170,7 +176,7 @@ const WorkDetailsForm = ({
 
           }}
         ></Autocomplete>
-      </FormControl>
+      </FormControl>:null}
       <FormControl fullWidth margin="normal">
         <InputLabel>Occupation</InputLabel>
         <Select value={occupation} onChange={handleOccupationChange}>
@@ -255,13 +261,19 @@ const WorkDetailsForm = ({
           <Button variant="outlined" onClick={() => setShowAddAddress(true)}>
             Add Address
           </Button>
-          {showAddAddress && (
+          {location.pathname==='/shops'?<>{showAddAddress && (
             <CreateAddress
               setShowAddAddress={setShowAddAddress}
               setAddressId={setAddAddressId}
               addressType={'SHOP'}
             />
-          )}
+          )}</>:<>{showAddAddress && (
+            <CreateAddress
+              setShowAddAddress={setShowAddAddress}
+              setAddressId={setAddressId}
+              addressType={'SHOP'}
+            />
+          )}</>}
         </form>
       )}
       {occupation === 'business' && (
@@ -288,7 +300,7 @@ const WorkDetailsForm = ({
           />
         </form>
       )}
-      <Grid item xs={12} md={6}>
+      {location.pathname==='/shops'?<Grid item xs={12} md={6}>
         <Button
           disabled={addAddressId === undefined ? true : false}
           variant="outlined"
@@ -296,7 +308,7 @@ const WorkDetailsForm = ({
         >
           Save Shop
         </Button>
-      </Grid>
+      </Grid>:null}
     </Container>
   );
 };

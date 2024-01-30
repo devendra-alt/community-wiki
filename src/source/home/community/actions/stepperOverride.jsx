@@ -149,6 +149,7 @@ ColorlibStepIcon.propTypes = {
 const steps = ['Add user details', 'Add Shop Details', 'Complete'];
 
 export default function FormSteppers({ activeIndex }) {
+  
   return (
     <Stack sx={{ width: '100%' }} spacing={4}>
       <Stepper
